@@ -1,0 +1,45 @@
+= Localizing Canon
+:toc:
+
+== Decision
+
+Ecosystem localization is owned by the dedicated `Localizing` component.
+
+Components are translation-source aware but are not multilingual-governance owners. Host applications are runtime consumers and must not become owners of component translation policy.
+
+== Component responsibility
+
+Every business component should publish only its canonical English translation surface:
+
+[source,text]
+----
+translations/<component>.en.yaml
+translations/<component>.validators.en.yaml
+translations/<component>.forms.en.yaml
+----
+
+== Localizing responsibility
+
+`Localizing` owns:
+
+* locale registry;
+* fallback chain policy;
+* catalog inventory;
+* missing translation reports;
+* glossary and terminology rules;
+* placeholder consistency checks;
+* Symfony catalog export;
+* import workflows for historical translation material.
+
+== Host responsibility
+
+Host applications only:
+
+* resolve active locale from route/session/user preference/request;
+* call Symfony Translator;
+* load exported catalogs;
+* keep host-shell strings that belong to the host itself.
+
+== Runtime policy
+
+`Localizing` must not become a synchronous translation lookup service for every request. It produces validated catalogs that Symfony Translator consumes at runtime.

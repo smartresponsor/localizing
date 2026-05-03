@@ -1,0 +1,28 @@
+= Salvage Report
+:toc:
+
+== Source material assessment
+
+The provided material contained useful ideas, but not a ready Symfony-first component.
+
+Useful ideas retained:
+
+* locale code/name conversion through Symfony Intl;
+* locale availability validation;
+* default locale and available locale registry;
+* locale-not-found and unavailable-locale exceptions;
+* translation catalog inventory and auditing;
+* request/session locale resolution as host integration guidance.
+
+Rejected as non-canonical:
+
+* vendor-specific subscribers;
+* empty event subscribers;
+* hard-coded route redirects such as `homepage`;
+* router decorators that remove `_locale` from generated URLs by default;
+* multilingual dumps treated as component-owned translations;
+* mixed-language English catalogs without audit.
+
+== Transformation
+
+The result is a clean Symfony-first repository with typed services, mirrored service interfaces, Doctrine entities, console workflows, configuration, and generated-catalog boundaries.

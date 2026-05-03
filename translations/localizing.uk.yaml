@@ -1,0 +1,6 @@
+localizing:
+  catalog:
+    audit: 'Аудит каталогів'
+    export: 'Експорт каталогів'
+  locale:
+    unavailable: 'Локаль недоступна.'

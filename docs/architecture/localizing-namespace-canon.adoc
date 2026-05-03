@@ -1,0 +1,13 @@
+= Localizing Namespace Canon
+
+Localizing is the workspace and repository capability name.
+
+The canonical PHP namespace is `App\Localizing\...`.
+
+The core business entity is `App\Localizing\Entity\Locale`.
+
+Service classes use the `Locale` prefix plus a suffix describing the PHP class form or service responsibility, for example `LocaleRegistry`, `LocaleFilesystemCatalogScanner`, `LocaleSymfonyCatalogExporter`, and `LocaleCatalogAuditor`.
+
+Controller classes follow the same component convention and use the `Locale` prefix, for example `LocaleCatalogController`.
+
+The repository remains Symfony-first and does not use `src/Domain` or port/adapter naming.

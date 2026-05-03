@@ -1,0 +1,7 @@
+localizing:
+  component:
+    title: 'Localizing'
+    description: 'Компонент управления локализацией экосистемы.'
+  audit:
+    missing_default_locale: 'Отсутствует сообщение дефолтной локали.'
+    unsupported_locale: 'Локаль не зарегистрирована.'

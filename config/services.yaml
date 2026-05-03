@@ -1,0 +1,33 @@
+parameters:
+  localizing.default_locale: '%env(default:APP_LOCALE:LOCALIZING_DEFAULT_LOCALE)%'
+  localizing.supported_locales: '%env(csv:LOCALIZING_SUPPORTED_LOCALES)%'
+  localizing.catalog_source_dir: '%kernel.project_dir%/resources/catalogs'
+  localizing.catalog_export_dir: '%kernel.project_dir%/var/export/translations'
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  App\Localizing\:
+    resource: '../src/'
+
+  App\Localizing\Service\Locale\LocaleRegistry:
+    arguments:
+      $configuredLocales: '%localizing.supported_locales%'
+      $defaultLocaleCode: '%localizing.default_locale%'
+
+  App\Localizing\Service\Catalog\LocaleFilesystemCatalogScanner:
+    arguments:
+      $catalogDirectory: '%localizing.catalog_source_dir%'
+
+  App\Localizing\Service\Catalog\LocaleSymfonyCatalogExporter:
+    arguments:
+      $exportDirectory: '%localizing.catalog_export_dir%'
+
+  App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerInterface: '@App\Localizing\Service\Catalog\LocaleFilesystemCatalogScanner'
+  App\Localizing\ServiceInterface\Catalog\LocaleCatalogExporterInterface: '@App\Localizing\Service\Catalog\LocaleSymfonyCatalogExporter'
+  App\Localizing\ServiceInterface\Quality\LocaleCatalogAuditorInterface: '@App\Localizing\Service\Quality\LocaleCatalogAuditor'
+  App\Localizing\ServiceInterface\Locale\LocaleCodeNameConverterInterface: '@App\Localizing\Service\Locale\LocaleCodeNameConverter'
+  App\Localizing\ServiceInterface\Locale\LocaleFallbackResolverInterface: '@App\Localizing\Service\Locale\LocaleFallbackResolver'
+  App\Localizing\ServiceInterface\Locale\LocaleRegistryInterface: '@App\Localizing\Service\Locale\LocaleRegistry'

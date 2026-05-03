@@ -1,0 +1,44 @@
+= Localizing
+:toc:
+
+`Localizing` is the Symfony-first localization governance component for the Smart Responsor ecosystem.
+
+== Responsibility
+
+`Localizing` owns ecosystem localization policy, locale registry, fallback chains, catalog inventory, translation quality checks, glossary rules, and Symfony catalog export.
+
+Host applications remain runtime consumers. They select the active locale and load generated Symfony translation catalogs. Business components keep only their canonical English translation surface.
+
+== Canon
+
+* Default Symfony `App\Localizing\...` namespace.
+* No `src/Domain` layer.
+* No port/adapter split.
+* Symfony Translator remains the runtime engine.
+* `Localizing` is not a request-time translation bottleneck.
+* Components publish canonical English keys; `Localizing` governs multilingual catalogs.
+
+== Main commands
+
+[source,bash]
+----
+bin/console localizing:audit-catalogs
+bin/console localizing:export-catalogs
+bin/console localizing:locale-name en uk
+----
+
+== Directory map
+
+[source,text]
+----
+src/Entity              Doctrine persistence model
+src/Repository          Doctrine repositories
+src/Service             Business services grouped by capability
+src/ServiceInterface    Mirrored service contracts
+src/Command             Console workflows
+src/ValueObject         Small immutable values
+translations            Own component translation messages
+config                  Symfony configuration
+resources/catalogs      Source ecosystem catalogs managed by Localizing
+var/export/translations Generated Symfony catalogs for host consumption
+----

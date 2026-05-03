@@ -1,0 +1,6 @@
+localizing:
+  catalog:
+    audit: 'Catalog audit'
+    export: 'Catalog export'
+  locale:
+    unavailable: 'Locale is not available.'

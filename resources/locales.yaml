@@ -1,0 +1,9 @@
+default_locale: en
+supported_locales:
+  - en
+  - uk
+  - ru
+fallback_chains:
+  uk-UA: [uk, en]
+  ru-RU: [ru, en]
+  en-GB: [en]

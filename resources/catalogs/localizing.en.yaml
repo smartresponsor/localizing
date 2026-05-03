@@ -1,0 +1,7 @@
+localizing:
+  component:
+    title: 'Localizing'
+    description: 'Ecosystem localization governance component.'
+  audit:
+    missing_default_locale: 'Default locale message is missing.'
+    unsupported_locale: 'Locale is not registered.'

@@ -1,0 +1,47 @@
+{
+  "name": "smart-responsor/localizing",
+  "type": "project",
+  "description": "Symfony-first Localizing component for ecosystem localization governance.",
+  "license": "proprietary",
+  "require": {
+    "php": ">=8.4",
+    "ext-intl": "*",
+    "doctrine/doctrine-bundle": "^3.0",
+    "doctrine/doctrine-migrations-bundle": "^4.0",
+    "doctrine/orm": "^3.3",
+    "symfony/console": "^8.0",
+    "symfony/dotenv": "^8.0",
+    "symfony/framework-bundle": "^8.0",
+    "symfony/intl": "^8.0",
+    "symfony/runtime": "^8.0",
+    "symfony/translation": "^8.0",
+    "symfony/validator": "^8.0",
+    "symfony/yaml": "^8.0"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^2.1",
+    "phpunit/phpunit": "^12.0",
+    "friendsofphp/php-cs-fixer": "^3.94",
+    "symfony/maker-bundle": "^1.67"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\Localizing\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "App\\Localizing\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "check:syntax": "find src tests -name '*.php' -print0 | xargs -0 -n1 php -l",
+    "localizing:audit": "bin/console localizing:audit-catalogs",
+    "localizing:export": "bin/console localizing:export-catalogs"
+  },
+  "config": {
+    "allow-plugins": {
+      "symfony/runtime": true
+    }
+  }
+}

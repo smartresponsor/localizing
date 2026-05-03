@@ -1,0 +1,17 @@
+schema_version: '1.0'
+required_component_surface:
+  default_locale: en
+  catalog_files:
+    - 'translations/<component>.en.yaml'
+    - 'translations/<component>.validators.en.yaml'
+    - 'translations/<component>.forms.en.yaml'
+host_application_policy:
+  owner: runtime-consumer
+  allowed_responsibility:
+    - active locale resolution
+    - Symfony Translator configuration
+    - host-shell messages
+  forbidden_responsibility:
+    - component translation governance
+    - ecosystem glossary ownership
+    - fallback policy ownership

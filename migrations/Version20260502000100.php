@@ -1,0 +1,44 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DoctrineMigrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+
+final class Version20260502000100 extends AbstractMigration
+{
+    public function getDescription(): string
+    {
+        return 'Create Localizing registry, catalog, glossary, and audit tables.';
+    }
+
+    public function up(Schema $schema): void
+    {
+        $this->addSql('CREATE TABLE locale_locale (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, code VARCHAR(16) NOT NULL, name VARCHAR(128) NOT NULL, enabled BOOLEAN NOT NULL, priority INTEGER NOT NULL)');
+        $this->addSql('CREATE UNIQUE INDEX uniq_locale_code ON locale_locale (code)');
+        $this->addSql('CREATE TABLE locale_fallback (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, locale_code VARCHAR(16) NOT NULL, fallback_locale_code VARCHAR(16) NOT NULL, position INTEGER NOT NULL)');
+        $this->addSql('CREATE UNIQUE INDEX uniq_locale_fallback_chain ON locale_fallback (locale_code, fallback_locale_code)');
+        $this->addSql('CREATE TABLE locale_translation_domain (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR(128) NOT NULL, component VARCHAR(128) NOT NULL)');
+        $this->addSql('CREATE UNIQUE INDEX uniq_locale_translation_domain_name ON locale_translation_domain (name)');
+        $this->addSql('CREATE TABLE locale_translation_key (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, domain_name VARCHAR(128) NOT NULL, key_name VARCHAR(255) NOT NULL, component VARCHAR(128) NOT NULL)');
+        $this->addSql('CREATE UNIQUE INDEX uniq_locale_translation_key_domain_name ON locale_translation_key (domain_name, key_name)');
+        $this->addSql('CREATE TABLE locale_translation_message (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, locale_code VARCHAR(16) NOT NULL, domain_name VARCHAR(128) NOT NULL, key_name VARCHAR(255) NOT NULL, message CLOB NOT NULL)');
+        $this->addSql('CREATE UNIQUE INDEX uniq_locale_translation_message ON locale_translation_message (locale_code, domain_name, key_name)');
+        $this->addSql('CREATE TABLE locale_terminology_entry (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, source_term VARCHAR(255) NOT NULL, locale_code VARCHAR(16) NOT NULL, approved_term VARCHAR(255) NOT NULL, note CLOB DEFAULT NULL)');
+        $this->addSql('CREATE UNIQUE INDEX uniq_locale_terminology_term ON locale_terminology_entry (source_term, locale_code)');
+        $this->addSql('CREATE TABLE locale_translation_audit_finding (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, severity VARCHAR(32) NOT NULL, code VARCHAR(128) NOT NULL, domain_name VARCHAR(128) NOT NULL, key_name VARCHAR(255) NOT NULL, locale_code VARCHAR(16) DEFAULT NULL, message CLOB NOT NULL)');
+    }
+
+    public function down(Schema $schema): void
+    {
+        $this->addSql('DROP TABLE locale_translation_audit_finding');
+        $this->addSql('DROP TABLE locale_terminology_entry');
+        $this->addSql('DROP TABLE locale_translation_message');
+        $this->addSql('DROP TABLE locale_translation_key');
+        $this->addSql('DROP TABLE locale_translation_domain');
+        $this->addSql('DROP TABLE locale_fallback');
+        $this->addSql('DROP TABLE locale_locale');
+    }
+}
