@@ -63,3 +63,13 @@ files:
   - translations/localizing.en.yaml
   - translations/localizing.ru.yaml
   - translations/localizing.uk.yaml
+
+output_contracts:
+  template_context:
+    interface: App\Localizing\ServiceInterface\Template\LocaleTemplateContextProviderInterface
+    value_object: App\Localizing\ValueObject\LocaleTemplateContext
+    purpose: UI-ready localization context for ecosystem bridge and interfacing layer.
+  template_selector:
+    interface: App\Localizing\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface
+    value_object: App\Localizing\ValueObject\LocaleTemplateSelectorOption
+    purpose: Locale switcher options for layout/header/template shell.

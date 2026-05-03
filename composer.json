@@ -1,7 +1,7 @@
 {
-  "name": "smart-responsor/localizing",
+  "name": "localizing/locale",
   "type": "project",
-  "description": "Symfony-first Localizing component for ecosystem localization governance.",
+  "description": "Localizing process app",
   "license": "proprietary",
   "require": {
     "php": ">=8.4",

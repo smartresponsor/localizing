@@ -31,3 +31,5 @@ services:
   App\Localizing\ServiceInterface\Locale\LocaleCodeNameConverterInterface: '@App\Localizing\Service\Locale\LocaleCodeNameConverter'
   App\Localizing\ServiceInterface\Locale\LocaleFallbackResolverInterface: '@App\Localizing\Service\Locale\LocaleFallbackResolver'
   App\Localizing\ServiceInterface\Locale\LocaleRegistryInterface: '@App\Localizing\Service\Locale\LocaleRegistry'
+  App\Localizing\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface: '@App\Localizing\Service\Template\LocaleTemplateSelectorProvider'
+  App\Localizing\ServiceInterface\Template\LocaleTemplateContextProviderInterface: '@App\Localizing\Service\Template\LocaleTemplateContextProvider'

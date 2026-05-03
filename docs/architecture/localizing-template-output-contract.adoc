@@ -1,0 +1,65 @@
+= Localizing Template Output Contract
+
+`Localizing` owns ecosystem localization governance, but it must expose a small UI-ready output contract for the bridge that connects ecosystem components to the templating/interfacing layer.
+
+== Canon
+
+* Main namespace: `App\Localizing\...`.
+* Repository/workspace capability name: `Localizing`.
+* Core business entity: `Locale`.
+* `Localizing` does not replace Symfony Translator at runtime.
+* Host applications still run `framework.translator` and own request/user/session/tenant locale resolution.
+* Interfacing consumes a stable output contract and must not own translation governance.
+* Other ecosystem components publish canonical English translation surfaces and `delivery/localizing/manifest.yaml` contracts.
+
+== Output contract owners
+
+`App\Localizing\ServiceInterface\Template\LocaleTemplateContextProviderInterface` is the primary bridge-facing abstraction.
+
+It returns `App\Localizing\ValueObject\LocaleTemplateContext`, which contains:
+
+* current locale;
+* default locale;
+* locale selector options;
+* fallback chain;
+* requested domains;
+* domain-key-message payload suitable for template bootstrap or JSON delivery.
+
+`App\Localizing\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface` is the smaller selector-only abstraction for layout/header locale switchers.
+
+== Runtime shape
+
+[source,json]
+----
+{
+  "component": "Localizing",
+  "currentLocale": "uk",
+  "defaultLocale": "en",
+  "selector": [
+    {"code": "en", "name": "English", "nativeName": "English", "current": false, "default": true},
+    {"code": "uk", "name": "Ukrainian", "nativeName": "українська", "current": true, "default": false}
+  ],
+  "fallbackChain": ["uk", "en"],
+  "domains": ["localizing"],
+  "messages": {
+    "localizing": {
+      "locale.selector.label": "Language"
+    }
+  }
+}
+----
+
+== Bridge usage
+
+The ecosystem bridge should depend on `LocaleTemplateContextProviderInterface`, not on filesystem catalog scanners or internal services.
+
+Interfacing can consume the contract as:
+
+* Twig context provider;
+* controller JSON endpoint;
+* frontend bootstrap payload;
+* layout-level locale selector view model.
+
+== Forbidden direction
+
+Do not create per-component locale subscribers, UI-specific localization plugins, or host-owned translation governance. The host is a runtime consumer. The bridge is a delivery consumer. `Localizing` is the governance and output-contract owner.
