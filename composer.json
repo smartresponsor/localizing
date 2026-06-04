@@ -16,7 +16,8 @@
     "symfony/runtime": "^8.0",
     "symfony/translation": "^8.0",
     "symfony/validator": "^8.0",
-    "symfony/yaml": "^8.0"
+    "symfony/yaml": "^8.0",
+    "objecting/object": "*@dev"
   },
   "require-dev": {
     "phpstan/phpstan": "^2.1",
@@ -26,12 +27,12 @@
   },
   "autoload": {
     "psr-4": {
-      "App\\Localizing\\": "src/"
+      "App\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "App\\Localizing\\Tests\\": "tests/"
+      "App\\Tests\\": "tests/"
     }
   },
   "scripts": {
@@ -43,5 +44,14 @@
     "allow-plugins": {
       "symfony/runtime": true
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../Objecting",
+      "options": {
+        "symlink": true
+      }
+    }
+  ]
 }

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Service\Template;
+namespace App\Service\Template;
 
-use App\Localizing\ServiceInterface\Locale\LocaleCodeNameConverterInterface;
-use App\Localizing\ServiceInterface\Locale\LocaleRegistryInterface;
-use App\Localizing\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface;
-use App\Localizing\ValueObject\LocaleTemplateSelectorOption;
+use App\Dto\Template\LocaleTemplateSelectorOptionDto;
+use App\ServiceInterface\Locale\LocaleCodeNameConverterInterface;
+use App\ServiceInterface\Locale\LocaleRegistryInterface;
+use App\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface;
 
 final readonly class LocaleTemplateSelectorProvider implements LocaleTemplateSelectorProviderInterface
 {
@@ -24,7 +24,7 @@ final readonly class LocaleTemplateSelectorProvider implements LocaleTemplateSel
         $options = [];
 
         foreach ($this->localeRegistry->getAvailableLocaleCodes() as $localeCode) {
-            $options[] = new LocaleTemplateSelectorOption(
+            $options[] = new LocaleTemplateSelectorOptionDto(
                 $localeCode,
                 $this->localeCodeNameConverter->convertCodeToName($localeCode, $displayLocaleCode ?? $currentLocaleCode),
                 $this->localeCodeNameConverter->convertCodeToName($localeCode, $localeCode),

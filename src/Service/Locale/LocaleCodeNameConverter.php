@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Service\Locale;
+namespace App\Service\Locale;
 
-use App\Localizing\ServiceInterface\Locale\LocaleCodeNameConverterInterface;
+use App\ServiceInterface\Locale\LocaleCodeNameConverterInterface;
 use Symfony\Component\Intl\Exception\MissingResourceException;
 use Symfony\Component\Intl\Locales;
 

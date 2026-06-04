@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Entity;
+namespace App\Entity;
 
-use App\Localizing\Repository\LocaleRepository;
+use App\Repository\LocaleEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: LocaleRepository::class)]
+#[ORM\Entity(repositoryClass: LocaleEntityRepository::class)]
 #[ORM\Table(name: 'locale_locale')]
 #[ORM\UniqueConstraint(name: 'uniq_locale_code', columns: ['code'])]
-class Locale
+class LocaleEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

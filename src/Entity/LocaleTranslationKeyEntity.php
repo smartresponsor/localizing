@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Entity;
+namespace App\Entity;
 
-use App\Localizing\Repository\TranslationKeyRepository;
+use App\Repository\LocaleTranslationKeyEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TranslationKeyRepository::class)]
+#[ORM\Entity(repositoryClass: LocaleTranslationKeyEntityRepository::class)]
 #[ORM\Table(name: 'locale_translation_key')]
 #[ORM\UniqueConstraint(name: 'uniq_locale_translation_key_domain_name', columns: ['domain_name', 'key_name'])]
-class TranslationKey
+class LocaleTranslationKeyEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

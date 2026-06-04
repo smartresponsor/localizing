@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\ValueObject;
+namespace App\ValueObject;
 
-use App\Localizing\Exception\InvalidLocaleCodeException;
+use App\Exception\LocaleInvalidCodeException;
 
 final readonly class LocaleCode implements \Stringable
 {
@@ -12,7 +12,7 @@ final readonly class LocaleCode implements \Stringable
     {
         $value = trim($value);
         if ('' === $value || !preg_match('/^[a-z]{2,3}(?:[-_][A-Z]{2})?$/', $value)) {
-            throw InvalidLocaleCodeException::forValue($value);
+            throw LocaleInvalidCodeException::forValue($value);
         }
 
         $this->value = str_replace('_', '-', $value);

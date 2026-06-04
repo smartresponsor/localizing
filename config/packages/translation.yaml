@@ -1,6 +1,6 @@
 framework:
-  default_locale: '%env(default:LOCALIZING_DEFAULT_LOCALE:APP_LOCALE)%'
+  default_locale: '%env(APP_LOCALE)%'
   translator:
     default_path: '%kernel.project_dir%/translations'
     fallbacks:
-      - '%env(default:LOCALIZING_FALLBACK_LOCALE:APP_FALLBACK_LOCALE)%'
+      - '%env(APP_FALLBACK_LOCALE)%'

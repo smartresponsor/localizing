@@ -4,7 +4,7 @@
 
 == Canon
 
-* Main namespace: `App\Localizing\...`.
+* Main namespace: `App\...`.
 * Repository/workspace capability name: `Localizing`.
 * Core business entity: `Locale`.
 * `Localizing` does not replace Symfony Translator at runtime.
@@ -14,9 +14,9 @@
 
 == Output contract owners
 
-`App\Localizing\ServiceInterface\Template\LocaleTemplateContextProviderInterface` is the primary bridge-facing abstraction.
+`App\ServiceInterface\Template\LocaleTemplateContextProviderInterface` is the primary bridge-facing abstraction.
 
-It returns `App\Localizing\ValueObject\LocaleTemplateContext`, which contains:
+It returns `App\Dto\Template\LocaleTemplateContextDto`, which contains:
 
 * current locale;
 * default locale;
@@ -25,7 +25,7 @@ It returns `App\Localizing\ValueObject\LocaleTemplateContext`, which contains:
 * requested domains;
 * domain-key-message payload suitable for template bootstrap or JSON delivery.
 
-`App\Localizing\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface` is the smaller selector-only abstraction for layout/header locale switchers.
+`App\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface` is the smaller selector-only abstraction for layout/header locale switchers.
 
 == Runtime shape
 

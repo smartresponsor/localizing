@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\ServiceInterface\Locale;
+namespace App\ServiceInterface\Locale;
 
 interface LocaleRegistryInterface
 {

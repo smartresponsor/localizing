@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\ServiceInterface\Catalog;
+namespace App\ServiceInterface\Catalog;
 
-use App\Localizing\Service\Catalog\LocaleCatalogMessage;
+use App\Dto\Catalog\LocaleCatalogMessageDto;
 
 interface LocaleCatalogExporterInterface
 {
-    /** @param list<LocaleCatalogMessage> $messages */
+    /** @param list<LocaleCatalogMessageDto> $messages */
     public function export(array $messages): int;
 }

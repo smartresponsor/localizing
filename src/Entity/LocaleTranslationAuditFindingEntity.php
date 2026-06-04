@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Entity;
+namespace App\Entity;
 
-use App\Localizing\Repository\TranslationAuditFindingRepository;
+use App\Repository\LocaleTranslationAuditFindingEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TranslationAuditFindingRepository::class)]
+#[ORM\Entity(repositoryClass: LocaleTranslationAuditFindingEntityRepository::class)]
 #[ORM\Table(name: 'locale_translation_audit_finding')]
-class TranslationAuditFinding
+class LocaleTranslationAuditFindingEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

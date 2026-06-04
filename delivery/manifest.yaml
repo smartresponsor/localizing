@@ -12,7 +12,7 @@ files:
   - config/packages/framework.yaml
   - config/packages/translation.yaml
   - config/services.yaml
-  - docs/architecture/legacy-salvage-report.adoc
+  - docs/architecture/localizing-legacy-salvage-report.adoc
   - docs/architecture/localizing-canon.adoc
   - migrations/Version20260502000100.php
   - phpstan.neon
@@ -26,24 +26,26 @@ files:
   - src/Command/LocaleExportCatalogsCommand.php
   - src/Command/LocaleNameCommand.php
   - src/Entity/Locale.php
-  - src/Entity/LocaleFallback.php
-  - src/Entity/TerminologyEntry.php
-  - src/Entity/TranslationAuditFinding.php
-  - src/Entity/TranslationDomain.php
-  - src/Entity/TranslationKey.php
-  - src/Entity/TranslationMessage.php
-  - src/Exception/InvalidLocaleCodeException.php
-  - src/Exception/InvalidTranslationKeyException.php
+  - src/Entity/LocaleFallbackEntity.php
+  - src/Entity/LocaleTerminologyEntryEntity.php
+  - src/Entity/LocaleTranslationAuditFindingEntity.php
+  - src/Entity/LocaleTranslationDomainEntity.php
+  - src/Entity/LocaleTranslationKeyEntity.php
+  - src/Entity/LocaleTranslationMessageEntity.php
+  - src/Exception/LocaleInvalidCodeException.php
+  - src/Exception/LocaleInvalidTranslationKeyException.php
   - src/Exception/LocaleNotFoundException.php
   - src/Kernel.php
-  - src/Repository/LocaleFallbackRepository.php
-  - src/Repository/LocaleRepository.php
-  - src/Repository/TerminologyEntryRepository.php
-  - src/Repository/TranslationAuditFindingRepository.php
-  - src/Repository/TranslationDomainRepository.php
-  - src/Repository/TranslationKeyRepository.php
-  - src/Repository/TranslationMessageRepository.php
-  - src/Service/Catalog/LocaleCatalogMessage.php
+  - src/Repository/LocaleFallbackEntityRepository.php
+  - src/Repository/LocaleEntityRepository.php
+  - src/Repository/LocaleTerminologyEntryEntityRepository.php
+  - src/Repository/LocaleTranslationAuditFindingEntityRepository.php
+  - src/Repository/LocaleTranslationDomainEntityRepository.php
+  - src/Repository/LocaleTranslationKeyEntityRepository.php
+  - src/Repository/LocaleTranslationMessageEntityRepository.php
+  - src/Dto/Catalog/LocaleCatalogMessageDto.php
+  - src/Dto/Template/LocaleTemplateContextDto.php
+  - src/Dto/Template/LocaleTemplateSelectorOptionDto.php
   - src/Service/Catalog/LocaleFilesystemCatalogScanner.php
   - src/Service/Catalog/LocaleSymfonyCatalogExporter.php
   - src/Service/Locale/LocaleCodeNameConverter.php
@@ -57,19 +59,20 @@ files:
   - src/ServiceInterface/Locale/LocaleRegistryInterface.php
   - src/ServiceInterface/Quality/LocaleCatalogAuditorInterface.php
   - src/ValueObject/LocaleCode.php
-  - src/ValueObject/TranslationKeyName.php
+  - src/ValueObject/LocaleTranslationKeyName.php
+  - tests/DataFixtures/LocaleDemoFixturesContractTest.php
   - tests/Service/Locale/LocaleFallbackResolverTest.php
-  - tools/patch/apply_localizing_bootstrap.ps1
+  - tools/patch/apply-localizing-bootstrap.ps1
   - translations/localizing.en.yaml
   - translations/localizing.ru.yaml
   - translations/localizing.uk.yaml
 
 output_contracts:
   template_context:
-    interface: App\Localizing\ServiceInterface\Template\LocaleTemplateContextProviderInterface
-    value_object: App\Localizing\ValueObject\LocaleTemplateContext
+    interface: App\ServiceInterface\Template\LocaleTemplateContextProviderInterface
+    dto: App\Dto\Template\LocaleTemplateContextDto
     purpose: UI-ready localization context for ecosystem bridge and interfacing layer.
   template_selector:
-    interface: App\Localizing\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface
-    value_object: App\Localizing\ValueObject\LocaleTemplateSelectorOption
+    interface: App\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface
+    dto: App\Dto\Template\LocaleTemplateSelectorOptionDto
     purpose: Locale switcher options for layout/header/template shell.

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Service\Catalog;
+namespace App\Service\Catalog;
 
-use App\Localizing\ServiceInterface\Catalog\LocaleCatalogExporterInterface;
+use App\ServiceInterface\Catalog\LocaleCatalogExporterInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Exception;
+namespace App\Exception;
 
 final class LocaleNotFoundException extends \RuntimeException
 {

@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\ValueObject;
+namespace App\ValueObject;
 
-use App\Localizing\Exception\InvalidTranslationKeyException;
+use App\Exception\LocaleInvalidTranslationKeyException;
 
-final readonly class TranslationKeyName implements \Stringable
+final readonly class LocaleTranslationKeyName implements \Stringable
 {
     public function __construct(private string $value)
     {
         $value = trim($value);
         if ('' === $value || !preg_match('/^[a-z][a-z0-9_]*(?:\.[a-z0-9_]+)*$/', $value)) {
-            throw InvalidTranslationKeyException::forValue($value);
+            throw LocaleInvalidTranslationKeyException::forValue($value);
         }
 
         $this->value = $value;

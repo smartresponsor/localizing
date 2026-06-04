@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\ValueObject;
+namespace App\Dto\Template;
 
-final readonly class LocaleTemplateContext
+final readonly class LocaleTemplateContextDto
 {
     /**
-     * @param list<LocaleTemplateSelectorOption>   $selectorOptions
-     * @param list<string>                         $fallbackLocaleCodes
-     * @param list<string>                         $domains
-     * @param array<string, array<string, string>> $messages
+     * @param list<LocaleTemplateSelectorOptionDto> $selectorOptions
+     * @param list<string>                          $fallbackLocaleCodes
+     * @param list<string>                          $domains
+     * @param array<string, array<string, string>>  $messages
      */
     public function __construct(
         public string $currentLocaleCode,
@@ -40,7 +40,7 @@ final readonly class LocaleTemplateContext
             'currentLocale' => $this->currentLocaleCode,
             'defaultLocale' => $this->defaultLocaleCode,
             'selector' => array_map(
-                static fn (LocaleTemplateSelectorOption $option): array => $option->toArray(),
+                static fn (LocaleTemplateSelectorOptionDto $option): array => $option->toArray(),
                 $this->selectorOptions,
             ),
             'fallbackChain' => $this->fallbackLocaleCodes,

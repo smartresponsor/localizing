@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\ValueObject;
+namespace App\Dto\Template;
 
-final readonly class LocaleTemplateSelectorOption
+final readonly class LocaleTemplateSelectorOptionDto
 {
     public function __construct(
         public string $code,

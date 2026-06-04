@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Controller;
+namespace App\Controller;
 
-use App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
-use App\Localizing\ServiceInterface\Template\LocaleTemplateContextProviderInterface;
+use App\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
+use App\ServiceInterface\Template\LocaleTemplateContextProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Exception;
+namespace App\Exception;
 
-final class InvalidLocaleCodeException extends \InvalidArgumentException
+final class LocaleInvalidCodeException extends \InvalidArgumentException
 {
     public static function forValue(string $value): self
     {

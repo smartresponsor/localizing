@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Service\Quality;
+namespace App\Service\Quality;
 
-use App\Localizing\Service\Catalog\LocaleCatalogMessage;
-use App\Localizing\ServiceInterface\Locale\LocaleRegistryInterface;
-use App\Localizing\ServiceInterface\Quality\LocaleCatalogAuditorInterface;
+use App\Dto\Catalog\LocaleCatalogMessageDto;
+use App\ServiceInterface\Locale\LocaleRegistryInterface;
+use App\ServiceInterface\Quality\LocaleCatalogAuditorInterface;
 
 final readonly class LocaleCatalogAuditor implements LocaleCatalogAuditorInterface
 {
@@ -50,7 +50,7 @@ final readonly class LocaleCatalogAuditor implements LocaleCatalogAuditorInterfa
     }
 
     /** @return array{severity:string, code:string, domain:string, key:string, locale:?string, message:string} */
-    private function finding(string $severity, string $code, LocaleCatalogMessage $message, string $text): array
+    private function finding(string $severity, string $code, LocaleCatalogMessageDto $message, string $text): array
     {
         return [
             'severity' => $severity,

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\ServiceInterface\Template;
+namespace App\ServiceInterface\Template;
 
-use App\Localizing\ValueObject\LocaleTemplateContext;
+use App\Dto\Template\LocaleTemplateContextDto;
 
 interface LocaleTemplateContextProviderInterface
 {
     /** @param list<string> $domains */
-    public function provide(string $currentLocaleCode, array $domains = []): LocaleTemplateContext;
+    public function provide(string $currentLocaleCode, array $domains = []): LocaleTemplateContextDto;
 }

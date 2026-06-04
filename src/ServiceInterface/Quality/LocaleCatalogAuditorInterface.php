@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\ServiceInterface\Quality;
+namespace App\ServiceInterface\Quality;
 
-use App\Localizing\Service\Catalog\LocaleCatalogMessage;
+use App\Dto\Catalog\LocaleCatalogMessageDto;
 
 interface LocaleCatalogAuditorInterface
 {
     /**
-     * @param list<LocaleCatalogMessage> $messages
+     * @param list<LocaleCatalogMessageDto> $messages
      *
      * @return list<array{severity:string, code:string, domain:string, key:string, locale:?string, message:string}>
      */

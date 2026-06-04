@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Service\Template;
+namespace App\Service\Template;
 
-use App\Localizing\Service\Catalog\LocaleCatalogMessage;
-use App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
-use App\Localizing\ServiceInterface\Locale\LocaleFallbackResolverInterface;
-use App\Localizing\ServiceInterface\Locale\LocaleRegistryInterface;
-use App\Localizing\ServiceInterface\Template\LocaleTemplateContextProviderInterface;
-use App\Localizing\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface;
-use App\Localizing\ValueObject\LocaleTemplateContext;
+use App\Dto\Catalog\LocaleCatalogMessageDto;
+use App\Dto\Template\LocaleTemplateContextDto;
+use App\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
+use App\ServiceInterface\Locale\LocaleFallbackResolverInterface;
+use App\ServiceInterface\Locale\LocaleRegistryInterface;
+use App\ServiceInterface\Template\LocaleTemplateContextProviderInterface;
+use App\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface;
 
 final readonly class LocaleTemplateContextProvider implements LocaleTemplateContextProviderInterface
 {
@@ -22,7 +22,7 @@ final readonly class LocaleTemplateContextProvider implements LocaleTemplateCont
     ) {
     }
 
-    public function provide(string $currentLocaleCode, array $domains = []): LocaleTemplateContext
+    public function provide(string $currentLocaleCode, array $domains = []): LocaleTemplateContextDto
     {
         $this->localeRegistry->assertAvailable($currentLocaleCode);
 
@@ -32,7 +32,7 @@ final readonly class LocaleTemplateContextProvider implements LocaleTemplateCont
         $domainsWithMessages = array_keys($messages);
         sort($domainsWithMessages);
 
-        return new LocaleTemplateContext(
+        return new LocaleTemplateContextDto(
             $currentLocaleCode,
             $this->localeRegistry->getDefaultLocaleCode(),
             $this->localeTemplateSelectorProvider->provide($currentLocaleCode),
@@ -67,7 +67,7 @@ final readonly class LocaleTemplateContextProvider implements LocaleTemplateCont
         $localeRank = array_flip($fallbackLocaleCodes);
 
         foreach ($this->localeCatalogScanner->scan() as $message) {
-            if (!$message instanceof LocaleCatalogMessage) {
+            if (!$message instanceof LocaleCatalogMessageDto) {
                 continue;
             }
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Command;
+namespace App\Command;
 
-use App\Localizing\ServiceInterface\Locale\LocaleCodeNameConverterInterface;
+use App\ServiceInterface\Locale\LocaleCodeNameConverterInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

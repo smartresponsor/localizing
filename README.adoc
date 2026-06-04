@@ -11,7 +11,7 @@ Host applications remain runtime consumers. They select the active locale and lo
 
 == Canon
 
-* Default Symfony `App\Localizing\...` namespace.
+* Default Symfony `App\...` namespace.
 * No `src/Domain` layer.
 * No port/adapter split.
 * Symfony Translator remains the runtime engine.

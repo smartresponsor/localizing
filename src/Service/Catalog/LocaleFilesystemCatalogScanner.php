@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Service\Catalog;
+namespace App\Service\Catalog;
 
-use App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
+use App\Dto\Catalog\LocaleCatalogMessageDto;
+use App\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
 
@@ -33,7 +34,7 @@ final readonly class LocaleFilesystemCatalogScanner implements LocaleCatalogScan
 
             foreach ($this->flatten($payload) as $key => $message) {
                 if (is_scalar($message)) {
-                    $messages[] = new LocaleCatalogMessage($locale, $domain, $key, (string) $message, $file->getPathname());
+                    $messages[] = new LocaleCatalogMessageDto($locale, $domain, $key, (string) $message, $file->getPathname());
                 }
             }
         }

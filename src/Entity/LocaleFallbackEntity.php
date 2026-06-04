@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Entity;
+namespace App\Entity;
 
-use App\Localizing\Repository\LocaleFallbackRepository;
+use App\Repository\LocaleFallbackEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: LocaleFallbackRepository::class)]
+#[ORM\Entity(repositoryClass: LocaleFallbackEntityRepository::class)]
 #[ORM\Table(name: 'locale_fallback')]
 #[ORM\UniqueConstraint(name: 'uniq_locale_fallback_chain', columns: ['locale_code', 'fallback_locale_code'])]
-class LocaleFallback
+class LocaleFallbackEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Tests\Service\Locale;
+namespace App\Tests\Service\Locale;
 
-use App\Localizing\Service\Locale\LocaleFallbackResolver;
-use App\Localizing\Service\Locale\LocaleRegistry;
+use App\Service\Locale\LocaleFallbackResolver;
+use App\Service\Locale\LocaleRegistry;
 use PHPUnit\Framework\TestCase;
 
 final class LocaleFallbackResolverTest extends TestCase

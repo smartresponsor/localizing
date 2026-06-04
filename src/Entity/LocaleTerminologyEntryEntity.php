@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Entity;
+namespace App\Entity;
 
-use App\Localizing\Repository\TerminologyEntryRepository;
+use App\Repository\LocaleTerminologyEntryEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TerminologyEntryRepository::class)]
+#[ORM\Entity(repositoryClass: LocaleTerminologyEntryEntityRepository::class)]
 #[ORM\Table(name: 'locale_terminology_entry')]
 #[ORM\UniqueConstraint(name: 'uniq_locale_terminology_term', columns: ['source_term', 'locale_code'])]
-class TerminologyEntry
+class LocaleTerminologyEntryEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

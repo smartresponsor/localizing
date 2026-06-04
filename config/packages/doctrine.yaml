@@ -13,5 +13,5 @@ doctrine:
         type: attribute
         is_bundle: false
         dir: '%kernel.project_dir%/src/Entity'
-        prefix: 'App\Localizing\Entity'
+        prefix: 'App\Entity'
         alias: Localizing

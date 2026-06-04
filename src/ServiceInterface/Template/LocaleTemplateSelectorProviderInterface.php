@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\ServiceInterface\Template;
+namespace App\ServiceInterface\Template;
 
-use App\Localizing\ValueObject\LocaleTemplateSelectorOption;
+use App\Dto\Template\LocaleTemplateSelectorOptionDto;
 
 interface LocaleTemplateSelectorProviderInterface
 {
-    /** @return list<LocaleTemplateSelectorOption> */
+    /** @return list<LocaleTemplateSelectorOptionDto> */
     public function provide(string $currentLocaleCode, ?string $displayLocaleCode = null): array;
 }
