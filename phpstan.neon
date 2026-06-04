@@ -4,3 +4,12 @@ parameters:
     - src
     - tests
 
+
+  ignoreErrors:
+    -
+      message: '#Property App\\Entity\\[A-Za-z0-9_]+::\$id \(int\|null\) is never assigned int so it can be removed from the property type\.#'
+      identifier: property.unusedType
+      paths:
+        - src/Entity
+      reportUnmatched: false
+      # Doctrine ORM assigns generated identifiers outside constructor/userland code.

@@ -30,10 +30,20 @@ final class LocaleNameCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $code = (string) $input->getArgument('code');
-        $displayLocale = (string) $input->getArgument('display-locale');
+        $code = $this->stringArgument($input, 'code');
+        $displayLocale = $this->stringArgument($input, 'display-locale');
         $io->writeln($this->converter->convertCodeToName($code, $displayLocale));
 
         return Command::SUCCESS;
+    }
+
+    private function stringArgument(InputInterface $input, string $name): string
+    {
+        $value = $input->getArgument($name);
+        if (!is_scalar($value)) {
+            throw new \InvalidArgumentException(sprintf('Argument "%s" must be scalar.', $name));
+        }
+
+        return (string) $value;
     }
 }

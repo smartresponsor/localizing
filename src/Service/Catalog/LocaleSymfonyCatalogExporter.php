@@ -16,6 +16,7 @@ final readonly class LocaleSymfonyCatalogExporter implements LocaleCatalogExport
 
     public function export(array $messages): int
     {
+        /** @var array<string, array<string, array<string, string>>> $grouped */
         $grouped = [];
         foreach ($messages as $message) {
             $grouped[$message->domainName][$message->localeCode][$message->keyName] = $message->message;
@@ -35,22 +36,41 @@ final readonly class LocaleSymfonyCatalogExporter implements LocaleCatalogExport
         return $count;
     }
 
-    /** @param array<string,string> $flat */
+    /**
+     * @param array<string, string> $flat
+     *
+     * @return array<string, mixed>
+     */
     private function unflatten(array $flat): array
     {
         $result = [];
         foreach ($flat as $key => $value) {
-            $cursor = &$result;
-            foreach (explode('.', $key) as $segment) {
-                if (!isset($cursor[$segment]) || !is_array($cursor[$segment])) {
-                    $cursor[$segment] = [];
-                }
-                $cursor = &$cursor[$segment];
-            }
-            $cursor = $value;
-            unset($cursor);
+            $this->writeNestedValue($result, explode('.', $key), $value);
         }
 
         return $result;
+    }
+
+    /**
+     * @param array<string, mixed>   $target
+     * @param non-empty-list<string> $segments
+     */
+    private function writeNestedValue(array &$target, array $segments, string $value): void
+    {
+        $segment = array_shift($segments);
+
+        if ([] === $segments) {
+            $target[$segment] = $value;
+
+            return;
+        }
+
+        if (!isset($target[$segment]) || !is_array($target[$segment])) {
+            $target[$segment] = [];
+        }
+
+        /** @var array<string, mixed> $nested */
+        $nested = &$target[$segment];
+        $this->writeNestedValue($nested, $segments, $value);
     }
 }

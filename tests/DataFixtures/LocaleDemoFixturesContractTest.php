@@ -6,8 +6,6 @@ namespace App\Tests\DataFixtures;
 
 use App\DataFixtures\LocaleDemoFixtures;
 use App\Entity\LocaleTranslationMessageEntity;
-use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
@@ -20,10 +18,12 @@ final class LocaleDemoFixturesContractTest extends TestCase
     public function testDemoFixturesPersistIntegerPrimaryKeysForMessages(): void
     {
         $entityManager = $this->entityManager();
-        $executor = new ORMExecutor($entityManager, new ORMPurger());
-        $executor->execute([new LocaleDemoFixtures()], append: false);
+        (new LocaleDemoFixtures())->load($entityManager);
 
-        $messages = $entityManager->createQuery('SELECT message FROM '.LocaleTranslationMessageEntity::class.' message ORDER BY message.id ASC')->getResult();
+        /** @var list<LocaleTranslationMessageEntity> $messages */
+        $messages = $entityManager
+            ->createQuery('SELECT message FROM '.LocaleTranslationMessageEntity::class.' message ORDER BY message.id ASC')
+            ->getResult();
 
         self::assertCount(27, $messages);
 
@@ -39,14 +39,14 @@ final class LocaleDemoFixturesContractTest extends TestCase
 
     private function entityManager(): EntityManager
     {
-        $projectDir = dirname(__DIR__);
+        $projectDir = dirname(__DIR__, 2);
         $config = ORMSetup::createAttributeMetadataConfig([$projectDir.'/src/Entity'], true);
         $config->setNamingStrategy(new UnderscoreNamingStrategy());
         $config->enableNativeLazyObjects(true);
         $connection = DriverManager::getConnection([
             'driver' => 'pdo_sqlite',
             'memory' => true,
-        ]);
+        ], $config);
 
         $entityManager = new EntityManager($connection, $config);
         $schemaTool = new SchemaTool($entityManager);

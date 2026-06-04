@@ -13,11 +13,10 @@ use App\Entity\LocaleTranslationKeyEntity;
 use App\Entity\LocaleTranslationMessageEntity;
 use Doctrine\Persistence\ObjectManager;
 
-final class LocaleDemoFixtures extends AbstractFakerFixture
+final class LocaleDemoFixtures
 {
     public function load(ObjectManager $manager): void
     {
-        $faker = $this->faker();
         $locales = [
             new LocaleEntity('en_US', 'English (US)', true, 1),
             new LocaleEntity('en_GB', 'English (UK)', true, 2),
@@ -79,29 +78,41 @@ final class LocaleDemoFixtures extends AbstractFakerFixture
         foreach (range(1, 4) as $index) {
             $manager->persist(new LocaleTerminologyEntryEntity(
                 sprintf('store term %02d', $index),
-                $faker->randomElement(['en_US', 'uk_UA', 'de_DE']),
+                $this->pick(['en_US', 'uk_UA', 'de_DE'], $index),
                 sprintf('approved term %02d', $index),
-                $faker->randomElement([
+                $this->pick([
                     'Used across product pages, checkout copy, and notification emails.',
                     'Keep terminology consistent between storefront and support flows.',
                     'Preferred wording for commerce-facing translations.',
-                ]),
+                ], $index),
             ));
 
             $manager->persist(new LocaleTranslationAuditFindingEntity(
-                $faker->randomElement(['info', 'warning', 'critical']),
+                $this->pick(['info', 'warning', 'critical'], $index),
                 sprintf('LOC-%03d', $index),
-                $faker->randomElement(['storefront', 'checkout', 'emails']),
-                $faker->randomElement(['hero_title', 'cart_title', 'order_subject']),
-                $faker->randomElement(['en_US', 'uk_UA', null]),
-                $faker->randomElement([
+                $this->pick(['storefront', 'checkout', 'emails'], $index),
+                $this->pick(['hero_title', 'cart_title', 'order_subject'], $index),
+                $this->pick(['en_US', 'uk_UA', null], $index),
+                $this->pick([
                     'Missing localized storefront headline.',
                     'Fallback wording is visible during checkout.',
                     'Notification subject should be aligned with branding.',
-                ]),
+                ], $index),
             ));
         }
 
         $manager->flush();
+    }
+
+    /**
+     * @template T
+     *
+     * @param non-empty-list<T> $values
+     *
+     * @return T
+     */
+    private function pick(array $values, int $seed): mixed
+    {
+        return $values[($seed - 1) % count($values)];
     }
 }

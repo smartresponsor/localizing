@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Service\Template;
 
-use App\Dto\Catalog\LocaleCatalogMessageDto;
 use App\Dto\Template\LocaleTemplateContextDto;
 use App\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
 use App\ServiceInterface\Locale\LocaleFallbackResolverInterface;
@@ -42,13 +41,26 @@ final readonly class LocaleTemplateContextProvider implements LocaleTemplateCont
         );
     }
 
-    /** @param list<string> $domains */
+    /**
+     * @param array<int|string, mixed> $domains
+     *
+     * @return list<string>
+     */
     private function normalizeDomains(array $domains): array
     {
-        $normalized = array_values(array_unique(array_filter(array_map(
-            static fn (string $domain): string => trim($domain),
-            $domains,
-        ))));
+        $normalized = [];
+        foreach ($domains as $domain) {
+            if (!is_scalar($domain)) {
+                continue;
+            }
+
+            $normalizedDomain = trim((string) $domain);
+            if ('' !== $normalizedDomain) {
+                $normalized[] = $normalizedDomain;
+            }
+        }
+
+        $normalized = array_values(array_unique($normalized));
         sort($normalized);
 
         return $normalized;
@@ -67,10 +79,6 @@ final readonly class LocaleTemplateContextProvider implements LocaleTemplateCont
         $localeRank = array_flip($fallbackLocaleCodes);
 
         foreach ($this->localeCatalogScanner->scan() as $message) {
-            if (!$message instanceof LocaleCatalogMessageDto) {
-                continue;
-            }
-
             if (!isset($localeRank[$message->localeCode])) {
                 continue;
             }

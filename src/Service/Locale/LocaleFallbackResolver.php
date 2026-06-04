@@ -16,8 +16,9 @@ final readonly class LocaleFallbackResolver implements LocaleFallbackResolverInt
     public function resolveFallbackChain(string $localeCode): array
     {
         $chain = [$localeCode];
-        if (str_contains($localeCode, '-')) {
-            $chain[] = strtolower(substr($localeCode, 0, strpos($localeCode, '-')));
+        $separatorPosition = strpos($localeCode, '-');
+        if (false !== $separatorPosition) {
+            $chain[] = strtolower(substr($localeCode, 0, $separatorPosition));
         }
 
         $chain[] = $this->localeRegistry->getDefaultLocaleCode();

@@ -43,4 +43,39 @@ class LocaleTranslationAuditFindingEntity
         $this->localeCode = $localeCode;
         $this->message = $message;
     }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getSeverity(): string
+    {
+        return $this->severity;
+    }
+
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    public function getDomainName(): string
+    {
+        return $this->domainName;
+    }
+
+    public function getKeyName(): string
+    {
+        return $this->keyName;
+    }
+
+    public function getLocaleCode(): ?string
+    {
+        return $this->localeCode;
+    }
+
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
 }

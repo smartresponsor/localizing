@@ -32,4 +32,24 @@ class LocaleFallbackEntity
         $this->fallbackLocaleCode = $fallbackLocaleCode;
         $this->position = $position;
     }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getLocaleCode(): string
+    {
+        return $this->localeCode;
+    }
+
+    public function getFallbackLocaleCode(): string
+    {
+        return $this->fallbackLocaleCode;
+    }
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
 }

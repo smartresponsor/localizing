@@ -36,4 +36,29 @@ class LocaleTerminologyEntryEntity
         $this->approvedTerm = $approvedTerm;
         $this->note = $note;
     }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getSourceTerm(): string
+    {
+        return $this->sourceTerm;
+    }
+
+    public function getLocaleCode(): string
+    {
+        return $this->localeCode;
+    }
+
+    public function getApprovedTerm(): string
+    {
+        return $this->approvedTerm;
+    }
+
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
 }

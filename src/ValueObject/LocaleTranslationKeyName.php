@@ -8,7 +8,9 @@ use App\Exception\LocaleInvalidTranslationKeyException;
 
 final readonly class LocaleTranslationKeyName implements \Stringable
 {
-    public function __construct(private string $value)
+    private string $value;
+
+    public function __construct(string $value)
     {
         $value = trim($value);
         if ('' === $value || !preg_match('/^[a-z][a-z0-9_]*(?:\.[a-z0-9_]+)*$/', $value)) {

@@ -53,7 +53,11 @@ final readonly class LocaleFilesystemCatalogScanner implements LocaleCatalogScan
         return [$domain, $locale];
     }
 
-    /** @return array<string, mixed> */
+    /**
+     * @param array<array-key, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
     private function flatten(array $data, string $prefix = ''): array
     {
         $result = [];

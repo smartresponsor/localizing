@@ -8,7 +8,9 @@ use App\Exception\LocaleInvalidCodeException;
 
 final readonly class LocaleCode implements \Stringable
 {
-    public function __construct(private string $value)
+    private string $value;
+
+    public function __construct(string $value)
     {
         $value = trim($value);
         if ('' === $value || !preg_match('/^[a-z]{2,3}(?:[-_][A-Z]{2})?$/', $value)) {

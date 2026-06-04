@@ -76,3 +76,59 @@ output_contracts:
     interface: App\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface
     dto: App\Dto\Template\LocaleTemplateSelectorOptionDto
     purpose: Locale switcher options for layout/header/template shell.
+
+# W05 doctrine config compatibility
+# Removed unsupported Doctrine ORM config keys: auto_generate_proxy_classes, enable_lazy_ghost_objects, report_fields_where_declared.
+
+
+w06:
+  name: localizing-w06-dotenv-console-boot
+  type: compatibility-fix
+  scope:
+    - bin/console
+    - delivery/manifest.yaml
+  fixes:
+    - Load .env via Symfony Dotenv before Kernel boot in console entrypoint.
+    - Resolve APP_LOCALE / APP_FALLBACK_LOCALE env lookup during console lint and validation.
+
+
+w07:
+  name: localizing-w07-phpstan-batch01
+  type: static-analysis-fix
+  scope:
+    - src/Command/LocaleNameCommand.php
+    - src/DataFixtures/LocaleDemoFixtures.php
+    - src/Entity
+    - src/ValueObject
+    - phpstan.neon
+  fixes:
+    - Avoid mixed-to-string casts in console input.
+    - Remove missing AbstractFakerFixture dependency from demo fixtures.
+    - Replace Faker randomElement calls with typed deterministic fixture helper.
+    - Add entity getters for Doctrine-managed fields used by tests and static analysis.
+    - Normalize readonly value objects without promoted-property reassignment.
+    - Ignore only Doctrine-generated id assignment noise in PHPStan config.
+
+w08:
+  name: localizing-w08-phpstan-batch02
+  type: static-analysis-fix
+  scope:
+    - src/Service/Catalog/LocaleFilesystemCatalogScanner.php
+    - src/Service/Catalog/LocaleSymfonyCatalogExporter.php
+    - src/Service/Locale/LocaleFallbackResolver.php
+    - src/Service/Template/LocaleTemplateContextProvider.php
+    - tests/DataFixtures/LocaleDemoFixturesContractTest.php
+  fixes:
+    - Add iterable value typing for catalog scanner flattening.
+    - Replace exporter by-reference unflatten logic with typed recursive nested writer.
+    - Guard fallback separator position before substr length usage.
+    - Normalize template domain inputs to list<string> and remove redundant instanceof.
+    - Remove dependency on absent Doctrine DataFixtures executor/purger classes in contract test.
+
+w09:
+  name: localizing-w09-phpstan-final-exporter
+  type: static-analysis-fix
+  scope:
+    - src/Service/Catalog/LocaleSymfonyCatalogExporter.php
+  fixes:
+    - Remove impossible null branch after array_shift on non-empty-list<string>.
