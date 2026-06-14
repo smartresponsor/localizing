@@ -16,6 +16,6 @@ final class LocalizingBundle extends Bundle
 
     public function getPath(): string
     {
-        return \dirname(__DIR__, 2);
+        return \dirname(__DIR__);
     }
 }
