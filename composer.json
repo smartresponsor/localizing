@@ -27,11 +27,13 @@
   },
   "autoload": {
     "psr-4": {
+      "App\\Localizing\\": "src/Localizing/",
       "App\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
+      "App\\Localizing\\Tests\\": "tests/",
       "App\\Tests\\": "tests/"
     }
   },
