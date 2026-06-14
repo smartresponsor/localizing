@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Locale;
+namespace App\Localizing\Service\Locale;
 
-use App\Exception\LocaleNotFoundException;
-use App\ServiceInterface\Locale\LocaleRegistryInterface;
+use App\Localizing\Exception\LocaleNotFoundException;
+use App\Localizing\ServiceInterface\Locale\LocaleRegistryInterface;
 
 final readonly class LocaleRegistry implements LocaleRegistryInterface
 {

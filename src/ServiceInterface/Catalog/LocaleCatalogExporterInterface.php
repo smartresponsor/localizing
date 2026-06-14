@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Catalog;
+namespace App\Localizing\ServiceInterface\Catalog;
 
-use App\Dto\Catalog\LocaleCatalogMessageDto;
+use App\Localizing\Dto\Catalog\LocaleCatalogMessageDto;
 
 interface LocaleCatalogExporterInterface
 {

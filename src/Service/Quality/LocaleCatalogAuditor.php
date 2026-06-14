@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Quality;
+namespace App\Localizing\Service\Quality;
 
-use App\Dto\Catalog\LocaleCatalogMessageDto;
-use App\ServiceInterface\Locale\LocaleRegistryInterface;
-use App\ServiceInterface\Quality\LocaleCatalogAuditorInterface;
+use App\Localizing\Dto\Catalog\LocaleCatalogMessageDto;
+use App\Localizing\ServiceInterface\Locale\LocaleRegistryInterface;
+use App\Localizing\ServiceInterface\Quality\LocaleCatalogAuditorInterface;
 
 final readonly class LocaleCatalogAuditor implements LocaleCatalogAuditorInterface
 {

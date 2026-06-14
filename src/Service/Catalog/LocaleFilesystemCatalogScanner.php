@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Catalog;
+namespace App\Localizing\Service\Catalog;
 
-use App\Dto\Catalog\LocaleCatalogMessageDto;
-use App\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
+use App\Localizing\Dto\Catalog\LocaleCatalogMessageDto;
+use App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
 
@@ -23,7 +23,7 @@ final readonly class LocaleFilesystemCatalogScanner implements LocaleCatalogScan
 
         $messages = [];
         $finder = new Finder();
-        $finder->files()->in($this->catalogDirectory)->name('*.yaml')->name('*.yml');
+        $finder->files()->in($this->catalogDirectory)->nameEntity('*.yaml')->nameEntity('*.yml');
 
         foreach ($finder as $file) {
             [$domain, $locale] = $this->parseDomainAndLocale($file->getFilename());
@@ -62,12 +62,12 @@ final readonly class LocaleFilesystemCatalogScanner implements LocaleCatalogScan
     {
         $result = [];
         foreach ($data as $key => $value) {
-            $name = '' === $prefix ? (string) $key : $prefix.'.'.$key;
+            $nameEntity = '' === $prefix ? (string) $key : $prefix.'.'.$key;
             if (is_array($value)) {
-                $result += $this->flatten($value, $name);
+                $result += $this->flatten($value, $nameEntity);
                 continue;
             }
-            $result[$name] = $value;
+            $result[$nameEntity] = $value;
         }
 
         return $result;

@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Repository;
+namespace App\Localizing\Repository;
 
-use App\Entity\LocaleTranslationAuditFindingEntity;
+use App\Localizing\Entity\LocaleTranslationAuditFindingEntity;
+use App\Localizing\RepositoryInterface\LocaleTranslationAuditFindingEntityRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<LocaleTranslationAuditFindingEntity>
  */
-final class LocaleTranslationAuditFindingEntityRepository extends ServiceEntityRepository
+final class LocaleTranslationAuditFindingEntityRepository extends ServiceEntityRepository implements LocaleTranslationAuditFindingEntityRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

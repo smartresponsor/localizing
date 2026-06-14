@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Repository;
+namespace App\Localizing\Repository;
 
-use App\Entity\LocaleFallbackEntity;
+use App\Localizing\Entity\LocaleFallbackEntity;
+use App\Localizing\RepositoryInterface\LocaleFallbackEntityRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<LocaleFallbackEntity>
  */
-final class LocaleFallbackEntityRepository extends ServiceEntityRepository
+final class LocaleFallbackEntityRepository extends ServiceEntityRepository implements LocaleFallbackEntityRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

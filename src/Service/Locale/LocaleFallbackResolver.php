@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Locale;
+namespace App\Localizing\Service\Locale;
 
-use App\ServiceInterface\Locale\LocaleFallbackResolverInterface;
-use App\ServiceInterface\Locale\LocaleRegistryInterface;
+use App\Localizing\ServiceInterface\Locale\LocaleFallbackResolverInterface;
+use App\Localizing\ServiceInterface\Locale\LocaleRegistryInterface;
 
 final readonly class LocaleFallbackResolver implements LocaleFallbackResolverInterface
 {

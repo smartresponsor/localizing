@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\DataFixtures;
+namespace App\Localizing\Tests\DataFixtures;
 
-use App\DataFixtures\LocaleDemoFixtures;
-use App\Entity\LocaleTranslationMessageEntity;
+use App\Localizing\DataFixtures\LocaleDemoFixtures;
+use App\Localizing\Entity\LocaleTranslationMessageEntity;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;

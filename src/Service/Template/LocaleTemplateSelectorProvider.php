@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Template;
+namespace App\Localizing\Service\Template;
 
-use App\Dto\Template\LocaleTemplateSelectorOptionDto;
-use App\ServiceInterface\Locale\LocaleCodeNameConverterInterface;
-use App\ServiceInterface\Locale\LocaleRegistryInterface;
-use App\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface;
+use App\Localizing\Dto\Template\LocaleTemplateSelectorOptionDto;
+use App\Localizing\ServiceInterface\Locale\LocaleCodeNameConverterInterface;
+use App\Localizing\ServiceInterface\Locale\LocaleRegistryInterface;
+use App\Localizing\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface;
 
 final readonly class LocaleTemplateSelectorProvider implements LocaleTemplateSelectorProviderInterface
 {

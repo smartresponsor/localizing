@@ -23,7 +23,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *
  *     return App::config([
  *         'services' => [
- *             'App\\' => [
+ *             'App\\Localizing\\' => [
  *                 'resource' => '../src/',
  *             ],
  *         ],

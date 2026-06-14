@@ -69,12 +69,12 @@ files:
 
 output_contracts:
   template_context:
-    interface: App\ServiceInterface\Template\LocaleTemplateContextProviderInterface
-    dto: App\Dto\Template\LocaleTemplateContextDto
+    interface: App\Localizing\ServiceInterface\Template\LocaleTemplateContextProviderInterface
+    dto: App\Localizing\Dto\Template\LocaleTemplateContextDto
     purpose: UI-ready localization context for ecosystem bridge and interfacing layer.
   template_selector:
-    interface: App\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface
-    dto: App\Dto\Template\LocaleTemplateSelectorOptionDto
+    interface: App\Localizing\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface
+    dto: App\Localizing\Dto\Template\LocaleTemplateSelectorOptionDto
     purpose: Locale switcher options for layout/header/template shell.
 
 # W05 doctrine config compatibility

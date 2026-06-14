@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Template;
+namespace App\Localizing\ServiceInterface\Template;
 
-use App\Dto\Template\LocaleTemplateSelectorOptionDto;
+use App\Localizing\Dto\Template\LocaleTemplateSelectorOptionDto;
 
 interface LocaleTemplateSelectorProviderInterface
 {

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Template;
+namespace App\Localizing\Service\Template;
 
-use App\Dto\Template\LocaleTemplateContextDto;
-use App\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
-use App\ServiceInterface\Locale\LocaleFallbackResolverInterface;
-use App\ServiceInterface\Locale\LocaleRegistryInterface;
-use App\ServiceInterface\Template\LocaleTemplateContextProviderInterface;
-use App\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface;
+use App\Localizing\Dto\Template\LocaleTemplateContextDto;
+use App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
+use App\Localizing\ServiceInterface\Locale\LocaleFallbackResolverInterface;
+use App\Localizing\ServiceInterface\Locale\LocaleRegistryInterface;
+use App\Localizing\ServiceInterface\Template\LocaleTemplateContextProviderInterface;
+use App\Localizing\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface;
 
 final readonly class LocaleTemplateContextProvider implements LocaleTemplateContextProviderInterface
 {

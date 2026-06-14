@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\ValueObject;
+namespace App\Localizing\ValueObject;
 
-use App\Exception\LocaleInvalidCodeException;
+use App\Localizing\Exception\LocaleInvalidCodeException;
 
 final readonly class LocaleCode implements \Stringable
 {

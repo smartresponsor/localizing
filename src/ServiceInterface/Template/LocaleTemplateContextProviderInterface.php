@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Template;
+namespace App\Localizing\ServiceInterface\Template;
 
-use App\Dto\Template\LocaleTemplateContextDto;
+use App\Localizing\Dto\Template\LocaleTemplateContextDto;
 
 interface LocaleTemplateContextProviderInterface
 {

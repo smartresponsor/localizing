@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\DataFixtures;
+namespace App\Localizing\DataFixtures;
 
-use App\Entity\LocaleEntity;
-use App\Entity\LocaleFallbackEntity;
-use App\Entity\LocaleTerminologyEntryEntity;
-use App\Entity\LocaleTranslationAuditFindingEntity;
-use App\Entity\LocaleTranslationDomainEntity;
-use App\Entity\LocaleTranslationKeyEntity;
-use App\Entity\LocaleTranslationMessageEntity;
+use App\Localizing\Entity\LocaleEntity;
+use App\Localizing\Entity\LocaleFallbackEntity;
+use App\Localizing\Entity\LocaleTerminologyEntryEntity;
+use App\Localizing\Entity\LocaleTranslationAuditFindingEntity;
+use App\Localizing\Entity\LocaleTranslationDomainEntity;
+use App\Localizing\Entity\LocaleTranslationKeyEntity;
+use App\Localizing\Entity\LocaleTranslationMessageEntity;
 use Doctrine\Persistence\ObjectManager;
 
 final class LocaleDemoFixtures

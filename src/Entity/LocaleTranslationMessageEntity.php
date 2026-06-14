@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Localizing\Entity;
 
-use App\Repository\LocaleTranslationMessageEntityRepository;
+use App\Localizing\Repository\LocaleTranslationMessageEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocaleTranslationMessageEntityRepository::class)]

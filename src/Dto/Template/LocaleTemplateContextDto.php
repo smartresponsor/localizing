@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Dto\Template;
+namespace App\Localizing\Dto\Template;
 
 final readonly class LocaleTemplateContextDto
 {

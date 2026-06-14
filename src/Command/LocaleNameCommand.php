@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Command;
+namespace App\Localizing\Command;
 
-use App\ServiceInterface\Locale\LocaleCodeNameConverterInterface;
+use App\Localizing\ServiceInterface\Locale\LocaleCodeNameConverterInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'localizing:locale-name', description: 'Resolve a locale code to a localized display name.')]
+#[AsCommand(name: 'localizing:locale-nameEntity', description: 'Resolve a locale code to a localized display nameEntity.')]
 final class LocaleNameCommand extends Command
 {
     public function __construct(private readonly LocaleCodeNameConverterInterface $converter)
@@ -24,7 +24,7 @@ final class LocaleNameCommand extends Command
     {
         $this
             ->addArgument('code', InputArgument::REQUIRED, 'Locale code, for example en or uk-UA')
-            ->addArgument('display-locale', InputArgument::OPTIONAL, 'Locale used to display the name', 'en');
+            ->addArgument('display-locale', InputArgument::OPTIONAL, 'Locale used to display the nameEntity', 'en');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -37,11 +37,11 @@ final class LocaleNameCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function stringArgument(InputInterface $input, string $name): string
+    private function stringArgument(InputInterface $input, string $nameEntity): string
     {
-        $value = $input->getArgument($name);
+        $value = $input->getArgument($nameEntity);
         if (!is_scalar($value)) {
-            throw new \InvalidArgumentException(sprintf('Argument "%s" must be scalar.', $name));
+            throw new \InvalidArgumentException(sprintf('Argument "%s" must be scalar.', $nameEntity));
         }
 
         return (string) $value;

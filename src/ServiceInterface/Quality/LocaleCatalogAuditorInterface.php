@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\ServiceInterface\Quality;
+namespace App\Localizing\ServiceInterface\Quality;
 
-use App\Dto\Catalog\LocaleCatalogMessageDto;
+use App\Localizing\Dto\Catalog\LocaleCatalogMessageDto;
 
 interface LocaleCatalogAuditorInterface
 {

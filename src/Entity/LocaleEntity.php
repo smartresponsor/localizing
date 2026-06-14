@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Localizing\Entity;
 
-use App\Repository\LocaleEntityRepository;
+use App\Localizing\Repository\LocaleEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocaleEntityRepository::class)]
@@ -21,7 +21,7 @@ class LocaleEntity
     private string $code;
 
     #[ORM\Column(type: 'string', length: 128)]
-    private string $name;
+    private string $nameEntity;
 
     #[ORM\Column(type: 'boolean')]
     private bool $enabled = true;
@@ -29,10 +29,10 @@ class LocaleEntity
     #[ORM\Column(type: 'integer')]
     private int $priority = 0;
 
-    public function __construct(string $code, string $name, bool $enabled = true, int $priority = 0)
+    public function __construct(string $code, string $nameEntity, bool $enabled = true, int $priority = 0)
     {
         $this->code = $code;
-        $this->name = $name;
+        $this->nameEntity = $nameEntity;
         $this->enabled = $enabled;
         $this->priority = $priority;
     }
@@ -49,7 +49,7 @@ class LocaleEntity
 
     public function getName(): string
     {
-        return $this->name;
+        return $this->nameEntity;
     }
 
     public function isEnabled(): bool

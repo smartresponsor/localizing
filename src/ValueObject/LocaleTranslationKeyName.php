@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\ValueObject;
+namespace App\Localizing\ValueObject;
 
-use App\Exception\LocaleInvalidTranslationKeyException;
+use App\Localizing\Exception\LocaleInvalidTranslationKeyException;
 
 final readonly class LocaleTranslationKeyName implements \Stringable
 {

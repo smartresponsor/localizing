@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Command;
+namespace App\Localizing\Command;
 
-use App\ServiceInterface\Catalog\LocaleCatalogExporterInterface;
-use App\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
+use App\Localizing\ServiceInterface\Catalog\LocaleCatalogExporterInterface;
+use App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

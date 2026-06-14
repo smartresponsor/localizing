@@ -12,27 +12,27 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\:
+  App\Localizing\:
     resource: '../src/'
 
-  App\Service\Locale\LocaleRegistry:
+  App\Localizing\Service\Locale\LocaleRegistry:
     arguments:
       $configuredLocales: '%localizing.supported_locales%'
       $defaultLocaleCode: '%localizing.default_locale%'
 
-  App\Service\Catalog\LocaleFilesystemCatalogScanner:
+  App\Localizing\Service\Catalog\LocaleFilesystemCatalogScanner:
     arguments:
       $catalogDirectory: '%localizing.catalog_source_dir%'
 
-  App\Service\Catalog\LocaleSymfonyCatalogExporter:
+  App\Localizing\Service\Catalog\LocaleSymfonyCatalogExporter:
     arguments:
       $exportDirectory: '%localizing.catalog_export_dir%'
 
-  App\ServiceInterface\Catalog\LocaleCatalogScannerInterface: '@App\Service\Catalog\LocaleFilesystemCatalogScanner'
-  App\ServiceInterface\Catalog\LocaleCatalogExporterInterface: '@App\Service\Catalog\LocaleSymfonyCatalogExporter'
-  App\ServiceInterface\Quality\LocaleCatalogAuditorInterface: '@App\Service\Quality\LocaleCatalogAuditor'
-  App\ServiceInterface\Locale\LocaleCodeNameConverterInterface: '@App\Service\Locale\LocaleCodeNameConverter'
-  App\ServiceInterface\Locale\LocaleFallbackResolverInterface: '@App\Service\Locale\LocaleFallbackResolver'
-  App\ServiceInterface\Locale\LocaleRegistryInterface: '@App\Service\Locale\LocaleRegistry'
-  App\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface: '@App\Service\Template\LocaleTemplateSelectorProvider'
-  App\ServiceInterface\Template\LocaleTemplateContextProviderInterface: '@App\Service\Template\LocaleTemplateContextProvider'
+  App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerInterface: '@App\Localizing\Service\Catalog\LocaleFilesystemCatalogScanner'
+  App\Localizing\ServiceInterface\Catalog\LocaleCatalogExporterInterface: '@App\Localizing\Service\Catalog\LocaleSymfonyCatalogExporter'
+  App\Localizing\ServiceInterface\Quality\LocaleCatalogAuditorInterface: '@App\Localizing\Service\Quality\LocaleCatalogAuditor'
+  App\Localizing\ServiceInterface\Locale\LocaleCodeNameConverterInterface: '@App\Localizing\Service\Locale\LocaleCodeNameConverter'
+  App\Localizing\ServiceInterface\Locale\LocaleFallbackResolverInterface: '@App\Localizing\Service\Locale\LocaleFallbackResolver'
+  App\Localizing\ServiceInterface\Locale\LocaleRegistryInterface: '@App\Localizing\Service\Locale\LocaleRegistry'
+  App\Localizing\ServiceInterface\Template\LocaleTemplateSelectorProviderInterface: '@App\Localizing\Service\Template\LocaleTemplateSelectorProvider'
+  App\Localizing\ServiceInterface\Template\LocaleTemplateContextProviderInterface: '@App\Localizing\Service\Template\LocaleTemplateContextProvider'
