@@ -13,9 +13,9 @@ final class LocalizingExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new YamlFileLoader($container, new FileLocator(\dirname(__DIR__, 3).'/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(\dirname(__DIR__, 2).'/config'));
         $loader->load('services.yaml');
 
-        $container->setParameter('localizing.package_dir', \dirname(__DIR__, 3));
+        $container->setParameter('localizing.package_dir', \dirname(__DIR__, 2));
     }
 }
