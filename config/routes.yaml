@@ -1,2 +1,2 @@
 localizing:
-  resource: routes/localizing.yaml
+  resource: routes/runtime.yaml
