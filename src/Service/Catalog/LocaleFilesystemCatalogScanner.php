@@ -23,7 +23,7 @@ final readonly class LocaleFilesystemCatalogScanner implements LocaleCatalogScan
 
         $messages = [];
         $finder = new Finder();
-        $finder->files()->in($this->catalogDirectory)->nameEntity('*.yaml')->nameEntity('*.yml');
+        $finder->files()->in($this->catalogDirectory)->name('*.yaml')->name('*.yml');
 
         foreach ($finder as $file) {
             [$domain, $locale] = $this->parseDomainAndLocale($file->getFilename());
@@ -62,12 +62,12 @@ final readonly class LocaleFilesystemCatalogScanner implements LocaleCatalogScan
     {
         $result = [];
         foreach ($data as $key => $value) {
-            $nameEntity = '' === $prefix ? (string) $key : $prefix.'.'.$key;
+            $name = '' === $prefix ? (string) $key : $prefix.'.'.$key;
             if (is_array($value)) {
-                $result += $this->flatten($value, $nameEntity);
+                $result += $this->flatten($value, $name);
                 continue;
             }
-            $result[$nameEntity] = $value;
+            $result[$name] = $value;
         }
 
         return $result;

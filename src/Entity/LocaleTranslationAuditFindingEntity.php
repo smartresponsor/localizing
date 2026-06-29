@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace App\Localizing\Entity;
 
 use App\Localizing\Repository\LocaleTranslationAuditFindingEntityRepository;
+use App\Objecting\EntityTrait\Embeddable\ObjectAuditEmbeddableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocaleTranslationAuditFindingEntityRepository::class)]
 #[ORM\Table(name: 'locale_translation_audit_finding')]
 class LocaleTranslationAuditFindingEntity
 {
+    use ObjectAuditEmbeddableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -42,6 +45,7 @@ class LocaleTranslationAuditFindingEntity
         $this->keyName = $keyName;
         $this->localeCode = $localeCode;
         $this->message = $message;
+        $this->initializeObjectAudit();
     }
 
     public function getId(): ?int

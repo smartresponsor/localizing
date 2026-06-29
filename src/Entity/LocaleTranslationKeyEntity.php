@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Localizing\Entity;
 
 use App\Localizing\Repository\LocaleTranslationKeyEntityRepository;
+use App\Objecting\EntityTrait\Embeddable\ObjectAuditEmbeddableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocaleTranslationKeyEntityRepository::class)]
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\UniqueConstraint(name: 'uniq_locale_translation_key_domain_name', columns: ['domain_name', 'key_name'])]
 class LocaleTranslationKeyEntity
 {
+    use ObjectAuditEmbeddableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -31,6 +34,7 @@ class LocaleTranslationKeyEntity
         $this->domainName = $domainName;
         $this->keyName = $keyName;
         $this->component = $component;
+        $this->initializeObjectAudit();
     }
 
     public function getId(): ?int

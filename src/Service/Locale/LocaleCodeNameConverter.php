@@ -10,13 +10,13 @@ use Symfony\Component\Intl\Locales;
 
 final class LocaleCodeNameConverter implements LocaleCodeNameConverterInterface
 {
-    public function convertNameToCode(string $nameEntity, ?string $displayLocaleCode = null): string
+    public function convertNameToCode(string $name, ?string $displayLocaleCode = null): string
     {
         $names = Locales::getNames($displayLocaleCode ?? 'en');
-        $code = array_search($nameEntity, $names, true);
+        $code = array_search($name, $names, true);
 
         if (!is_string($code)) {
-            throw new \InvalidArgumentException(sprintf('Cannot find locale code for display nameEntity "%s".', $nameEntity));
+            throw new \InvalidArgumentException(sprintf('Cannot find locale code for display name "%s".', $name));
         }
 
         return $code;
@@ -27,7 +27,7 @@ final class LocaleCodeNameConverter implements LocaleCodeNameConverterInterface
         try {
             return Locales::getName($code, $displayLocaleCode ?? 'en');
         } catch (MissingResourceException $exception) {
-            throw new \InvalidArgumentException(sprintf('Cannot find display nameEntity for locale code "%s".', $code), 0, $exception);
+            throw new \InvalidArgumentException(sprintf('Cannot find display name for locale code "%s".', $code), 0, $exception);
         }
     }
 }

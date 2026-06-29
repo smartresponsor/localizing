@@ -1,5 +1,2 @@
-controllers:
-  resource:
-    path: ../src/Controller/
-    namespace: App\Localizing\Controller
-  type: attribute
+localizing:
+  resource: routes/runtime.yaml

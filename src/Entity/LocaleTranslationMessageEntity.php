@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Localizing\Entity;
 
 use App\Localizing\Repository\LocaleTranslationMessageEntityRepository;
+use App\Objecting\EntityTrait\Embeddable\ObjectAuditEmbeddableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocaleTranslationMessageEntityRepository::class)]
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\UniqueConstraint(name: 'uniq_locale_translation_message', columns: ['locale_code', 'domain_name', 'key_name'])]
 class LocaleTranslationMessageEntity
 {
+    use ObjectAuditEmbeddableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -29,12 +32,19 @@ class LocaleTranslationMessageEntity
     #[ORM\Column(type: 'text')]
     private string $message;
 
-    public function __construct(string $localeCode = '', string $domainName = '', string $keyName = '', string $message = '')
+    public function __construct(string $localeCode, string $domainName, string $keyName, string $message)
     {
         $this->localeCode = $localeCode;
         $this->domainName = $domainName;
         $this->keyName = $keyName;
         $this->message = $message;
+        $this->initializeObjectAudit();
+    }
+
+    public function updateMessage(string $message): void
+    {
+        $this->message = $message;
+        $this->touchModified();
     }
 
     public function getId(): ?int
@@ -60,25 +70,5 @@ class LocaleTranslationMessageEntity
     public function getMessage(): string
     {
         return $this->message;
-    }
-
-    public function setLocaleCode(string $localeCode): void
-    {
-        $this->localeCode = $localeCode;
-    }
-
-    public function setDomainName(string $domainName): void
-    {
-        $this->domainName = $domainName;
-    }
-
-    public function setKeyName(string $keyName): void
-    {
-        $this->keyName = $keyName;
-    }
-
-    public function setMessage(string $message): void
-    {
-        $this->message = $message;
     }
 }

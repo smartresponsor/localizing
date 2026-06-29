@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Localizing\Entity;
 
 use App\Localizing\Repository\LocaleTerminologyEntryEntityRepository;
+use App\Objecting\EntityTrait\Embeddable\ObjectAuditEmbeddableTrait;
+use App\Objecting\EntityTrait\Embeddable\ObjectVersionEmbeddableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocaleTerminologyEntryEntityRepository::class)]
@@ -12,6 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\UniqueConstraint(name: 'uniq_locale_terminology_term', columns: ['source_term', 'locale_code'])]
 class LocaleTerminologyEntryEntity
 {
+    use ObjectAuditEmbeddableTrait;
+    use ObjectVersionEmbeddableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -35,6 +40,8 @@ class LocaleTerminologyEntryEntity
         $this->localeCode = $localeCode;
         $this->approvedTerm = $approvedTerm;
         $this->note = $note;
+        $this->initializeObjectAudit();
+        $this->initializeObjectVersion();
     }
 
     public function getId(): ?int
@@ -60,5 +67,12 @@ class LocaleTerminologyEntryEntity
     public function getNote(): ?string
     {
         return $this->note;
+    }
+
+    public function update(string $approvedTerm, ?string $note): void
+    {
+        $this->approvedTerm = $approvedTerm;
+        $this->note = $note;
+        $this->touchModified();
     }
 }

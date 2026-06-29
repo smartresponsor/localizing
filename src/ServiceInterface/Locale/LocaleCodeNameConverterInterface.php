@@ -6,7 +6,7 @@ namespace App\Localizing\ServiceInterface\Locale;
 
 interface LocaleCodeNameConverterInterface
 {
-    public function convertNameToCode(string $nameEntity, ?string $displayLocaleCode = null): string;
+    public function convertNameToCode(string $name, ?string $displayLocaleCode = null): string;
 
     public function convertCodeToName(string $code, ?string $displayLocaleCode = null): string;
 }

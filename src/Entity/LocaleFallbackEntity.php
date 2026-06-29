@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Localizing\Entity;
 
 use App\Localizing\Repository\LocaleFallbackEntityRepository;
+use App\Objecting\EntityTrait\Embeddable\ObjectAuditEmbeddableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocaleFallbackEntityRepository::class)]
@@ -12,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\UniqueConstraint(name: 'uniq_locale_fallback_chain', columns: ['locale_code', 'fallback_locale_code'])]
 class LocaleFallbackEntity
 {
+    use ObjectAuditEmbeddableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -31,6 +34,7 @@ class LocaleFallbackEntity
         $this->localeCode = $localeCode;
         $this->fallbackLocaleCode = $fallbackLocaleCode;
         $this->position = $position;
+        $this->initializeObjectAudit();
     }
 
     public function getId(): ?int

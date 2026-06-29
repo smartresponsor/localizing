@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Localizing\Entity;
 
 use App\Localizing\Repository\LocaleEntityRepository;
+use App\Objecting\EntityTrait\Embeddable\ObjectAuditEmbeddableTrait;
+use App\Objecting\EntityTrait\Embeddable\ObjectVersionEmbeddableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocaleEntityRepository::class)]
@@ -12,6 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\UniqueConstraint(name: 'uniq_locale_code', columns: ['code'])]
 class LocaleEntity
 {
+    use ObjectAuditEmbeddableTrait;
+    use ObjectVersionEmbeddableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -21,7 +26,7 @@ class LocaleEntity
     private string $code;
 
     #[ORM\Column(type: 'string', length: 128)]
-    private string $nameEntity;
+    private string $name;
 
     #[ORM\Column(type: 'boolean')]
     private bool $enabled = true;
@@ -29,12 +34,14 @@ class LocaleEntity
     #[ORM\Column(type: 'integer')]
     private int $priority = 0;
 
-    public function __construct(string $code, string $nameEntity, bool $enabled = true, int $priority = 0)
+    public function __construct(string $code, string $name, bool $enabled = true, int $priority = 0)
     {
         $this->code = $code;
-        $this->nameEntity = $nameEntity;
+        $this->name = $name;
         $this->enabled = $enabled;
         $this->priority = $priority;
+        $this->initializeObjectAudit();
+        $this->initializeObjectVersion();
     }
 
     public function getId(): ?int
@@ -49,7 +56,7 @@ class LocaleEntity
 
     public function getName(): string
     {
-        return $this->nameEntity;
+        return $this->name;
     }
 
     public function isEnabled(): bool
@@ -60,5 +67,17 @@ class LocaleEntity
     public function getPriority(): int
     {
         return $this->priority;
+    }
+
+    public function enable(): void
+    {
+        $this->enabled = true;
+        $this->touchModified();
+    }
+
+    public function disable(): void
+    {
+        $this->enabled = false;
+        $this->touchModified();
     }
 }
