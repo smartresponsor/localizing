@@ -15,6 +15,11 @@ services:
   App\Localizing\:
     resource: '../src/'
 
+  App\Localizing\Controller\:
+    resource: '../src/Controller/'
+    public: true
+    tags: ['controller.service_arguments']
+
   App\Localizing\Service\Locale\LocaleRegistry:
     arguments:
       $configuredLocales: '%localizing.supported_locales%'
