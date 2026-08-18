@@ -36,9 +36,9 @@
     }
   },
   "scripts": {
-    "check:syntax": "find src tests -name '*.php' -print0 | xargs -0 -n1 php -l",
-    "localizing:audit": "bin/console localizing:audit-catalogs",
-    "localizing:export": "bin/console localizing:export-catalogs"
+    "check:syntax": "@php bin/lint-php.php",
+    "localizing:audit": "@php bin/console localizing:audit-catalogs",
+    "localizing:export": "@php bin/console localizing:export-catalogs"
   },
   "config": {
     "allow-plugins": {
