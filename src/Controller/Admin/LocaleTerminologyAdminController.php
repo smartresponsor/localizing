@@ -42,11 +42,18 @@ final readonly class LocaleTerminologyAdminController
 
     public function register(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true) ?? [];
-        $sourceTerm = trim((string) ($data['source_term'] ?? ''));
-        $locale = trim((string) ($data['locale'] ?? ''));
-        $approvedTerm = trim((string) ($data['approved_term'] ?? ''));
-        $note = isset($data['note']) ? (string) $data['note'] : null;
+        $data = json_decode($request->getContent(), true);
+        if (!is_array($data)) {
+            $data = [];
+        }
+        $sourceValue = $data['source_term'] ?? null;
+        $localeValue = $data['locale'] ?? null;
+        $approvedValue = $data['approved_term'] ?? null;
+        $noteValue = $data['note'] ?? null;
+        $sourceTerm = is_scalar($sourceValue) ? trim((string) $sourceValue) : '';
+        $locale = is_scalar($localeValue) ? trim((string) $localeValue) : '';
+        $approvedTerm = is_scalar($approvedValue) ? trim((string) $approvedValue) : '';
+        $note = is_scalar($noteValue) ? (string) $noteValue : null;
 
         if ('' === $sourceTerm || '' === $locale || '' === $approvedTerm) {
             return new JsonResponse(['error' => 'source_term, locale and approved_term are required'], 400);
@@ -81,9 +88,17 @@ final readonly class LocaleTerminologyAdminController
             return new JsonResponse(['error' => 'Terminology entry not found'], 404);
         }
 
-        $data = json_decode($request->getContent(), true) ?? [];
-        $approvedTerm = trim((string) ($data['approved_term'] ?? $entry->getApprovedTerm()));
-        $note = array_key_exists('note', $data) ? (null !== $data['note'] ? (string) $data['note'] : null) : $entry->getNote();
+        $data = json_decode($request->getContent(), true);
+        if (!is_array($data)) {
+            $data = [];
+        }
+        $approvedValue = $data['approved_term'] ?? $entry->getApprovedTerm();
+        $approvedTerm = is_scalar($approvedValue) ? trim((string) $approvedValue) : '';
+        $note = $entry->getNote();
+        if (array_key_exists('note', $data)) {
+            $noteValue = $data['note'];
+            $note = null === $noteValue ? null : (is_scalar($noteValue) ? (string) $noteValue : $entry->getNote());
+        }
 
         if ('' === $approvedTerm) {
             return new JsonResponse(['error' => 'approved_term cannot be empty'], 400);

@@ -4,7 +4,7 @@ localizing_api_locale_list:
   methods: [GET]
 
 localizing_api_locale_fallback:
-  path: /api/locale/{code}/fallback
+  path: /api/locale/fallback/{slug}
   controller: App\Localizing\Controller\Api\LocaleFallbackApiController::__invoke
   methods: [GET]
 

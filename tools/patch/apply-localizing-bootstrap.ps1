@@ -30,5 +30,13 @@ try {
     }
 }
 finally {
-    Remove-Item -LiteralPath $temp -Recurse -Force -ErrorAction SilentlyContinue
+    if (Test-Path -LiteralPath $temp) {
+        $tempFull = Normalize-FullPath $temp
+        $safeTempPrefix = Join-Path (Normalize-FullPath ([System.IO.Path]::GetTempPath())) 'localizing_patch_'
+        if (-not $tempFull.StartsWith($safeTempPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+            throw "Refusing to delete unexpected temp path: $tempFull"
+        }
+
+        [System.IO.Directory]::Delete($tempFull, $true)
+    }
 }

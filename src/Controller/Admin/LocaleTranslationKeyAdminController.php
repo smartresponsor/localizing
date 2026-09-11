@@ -41,10 +41,16 @@ final readonly class LocaleTranslationKeyAdminController
 
     public function register(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true) ?? [];
-        $domain = trim((string) ($data['domain'] ?? ''));
-        $key = trim((string) ($data['key'] ?? ''));
-        $component = trim((string) ($data['component'] ?? ''));
+        $data = json_decode($request->getContent(), true);
+        if (!is_array($data)) {
+            $data = [];
+        }
+        $domainValue = $data['domain'] ?? null;
+        $keyValue = $data['key'] ?? null;
+        $componentValue = $data['component'] ?? null;
+        $domain = is_scalar($domainValue) ? trim((string) $domainValue) : '';
+        $key = is_scalar($keyValue) ? trim((string) $keyValue) : '';
+        $component = is_scalar($componentValue) ? trim((string) $componentValue) : '';
 
         if ('' === $domain || '' === $key || '' === $component) {
             return new JsonResponse(['error' => 'domain, key and component are required'], 400);

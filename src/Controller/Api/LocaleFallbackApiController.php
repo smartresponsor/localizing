@@ -14,11 +14,11 @@ final readonly class LocaleFallbackApiController
     ) {
     }
 
-    public function __invoke(string $code): JsonResponse
+    public function __invoke(string $slug): JsonResponse
     {
         return new JsonResponse([
-            'locale' => $code,
-            'fallback_chain' => $this->fallbackResolver->resolveFallbackChain($code),
+            'locale' => $slug,
+            'fallback_chain' => $this->fallbackResolver->resolveFallbackChain($slug),
         ]);
     }
 }

@@ -2,9 +2,9 @@
 
 Localizing is the workspace and repository capability name.
 
-The canonical PHP namespace is `App\...`.
+The canonical component PHP namespace is `App\Localizing\...`, derived from the Composer component token in `localizing/locale`. This remains inside the platform `App\` namespace model; no alternative root namespace is introduced.
 
-The core business entity is `App\Entity\Locale`.
+The core business entity family lives under `App\Localizing\Entity\...` and uses the canonical `Locale*` subject prefix.
 
 Service classes use the `Locale` prefix plus a suffix describing the PHP class form or service responsibility, for example `LocaleRegistry`, `LocaleFilesystemCatalogScanner`, `LocaleSymfonyCatalogExporter`, and `LocaleCatalogAuditor`.
 

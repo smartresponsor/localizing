@@ -34,9 +34,14 @@ final readonly class LocaleTranslationDomainAdminController
 
     public function register(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true) ?? [];
-        $name = trim((string) ($data['name'] ?? ''));
-        $component = trim((string) ($data['component'] ?? ''));
+        $data = json_decode($request->getContent(), true);
+        if (!is_array($data)) {
+            $data = [];
+        }
+        $nameValue = $data['name'] ?? null;
+        $componentValue = $data['component'] ?? null;
+        $name = is_scalar($nameValue) ? trim((string) $nameValue) : '';
+        $component = is_scalar($componentValue) ? trim((string) $componentValue) : '';
 
         if ('' === $name || '' === $component) {
             return new JsonResponse(['error' => 'name and component are required'], 400);

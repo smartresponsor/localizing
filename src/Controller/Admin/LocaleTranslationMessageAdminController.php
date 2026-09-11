@@ -44,11 +44,18 @@ final readonly class LocaleTranslationMessageAdminController
 
     public function upsert(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true) ?? [];
-        $locale = trim((string) ($data['locale'] ?? ''));
-        $domain = trim((string) ($data['domain'] ?? ''));
-        $key = trim((string) ($data['key'] ?? ''));
-        $message = (string) ($data['message'] ?? '');
+        $data = json_decode($request->getContent(), true);
+        if (!is_array($data)) {
+            $data = [];
+        }
+        $localeValue = $data['locale'] ?? null;
+        $domainValue = $data['domain'] ?? null;
+        $keyValue = $data['key'] ?? null;
+        $messageValue = $data['message'] ?? null;
+        $locale = is_scalar($localeValue) ? trim((string) $localeValue) : '';
+        $domain = is_scalar($domainValue) ? trim((string) $domainValue) : '';
+        $key = is_scalar($keyValue) ? trim((string) $keyValue) : '';
+        $message = is_scalar($messageValue) ? (string) $messageValue : '';
 
         if ('' === $locale || '' === $domain || '' === $key) {
             return new JsonResponse(['error' => 'locale, domain and key are required'], 400);

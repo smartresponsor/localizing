@@ -38,11 +38,18 @@ final readonly class LocaleAdminController
 
     public function register(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true) ?? [];
-        $code = trim((string) ($data['code'] ?? ''));
-        $name = trim((string) ($data['name'] ?? ''));
-        $enabled = (bool) ($data['enabled'] ?? true);
-        $priority = (int) ($data['priority'] ?? 0);
+        $data = json_decode($request->getContent(), true);
+        if (!is_array($data)) {
+            $data = [];
+        }
+        $codeValue = $data['code'] ?? null;
+        $nameValue = $data['name'] ?? null;
+        $enabledValue = $data['enabled'] ?? true;
+        $priorityValue = $data['priority'] ?? 0;
+        $code = is_scalar($codeValue) ? trim((string) $codeValue) : '';
+        $name = is_scalar($nameValue) ? trim((string) $nameValue) : '';
+        $enabled = is_bool($enabledValue) ? $enabledValue : true;
+        $priority = is_int($priorityValue) ? $priorityValue : (is_numeric($priorityValue) ? (int) $priorityValue : 0);
 
         if ('' === $code) {
             return new JsonResponse(['error' => 'code is required'], 400);
@@ -69,11 +76,11 @@ final readonly class LocaleAdminController
         ], 201);
     }
 
-    public function enable(string $code): JsonResponse
+    public function enable(string $slug): JsonResponse
     {
-        $locale = $this->localeRepository->findOneBy(['code' => $code]);
+        $locale = $this->localeRepository->findOneBy(['code' => $slug]);
         if (null === $locale) {
-            return new JsonResponse(['error' => sprintf('Locale "%s" not found', $code)], 404);
+            return new JsonResponse(['error' => sprintf('Locale "%s" not found', $slug)], 404);
         }
 
         $locale->enable();
@@ -82,11 +89,11 @@ final readonly class LocaleAdminController
         return new JsonResponse(['code' => $locale->getCode(), 'enabled' => true]);
     }
 
-    public function disable(string $code): JsonResponse
+    public function disable(string $slug): JsonResponse
     {
-        $locale = $this->localeRepository->findOneBy(['code' => $code]);
+        $locale = $this->localeRepository->findOneBy(['code' => $slug]);
         if (null === $locale) {
-            return new JsonResponse(['error' => sprintf('Locale "%s" not found', $code)], 404);
+            return new JsonResponse(['error' => sprintf('Locale "%s" not found', $slug)], 404);
         }
 
         $locale->disable();
