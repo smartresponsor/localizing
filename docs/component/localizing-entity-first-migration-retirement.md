@@ -31,7 +31,7 @@ Resolution:
 
 - `Locale` maps to existing `LocaleEntity`.
 - `LocaleEn` is not carried forward as a locale-specific entity; localized strings are normalized through `LocaleTranslationMessageEntity`.
-- `SupportedLocale` is restored as `App\Localizing\ValueObject\SupportedLocale`, not as a Doctrine entity, because it is a static semantic catalog/constants object rather than persisted aggregate state.
+- `SupportedLocale` is restored as `App\Localizing\ValueObject\LocaleSupportedCatalog`, not as a Doctrine entity, because it is a static semantic catalog/constants object rather than persisted aggregate state.
 
 ## Objecting/system fields
 

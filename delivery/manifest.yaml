@@ -42,19 +42,19 @@ files:
   - src/Repository/LocaleTranslationDomainEntityRepository.php
   - src/Repository/LocaleTranslationKeyEntityRepository.php
   - src/Repository/LocaleTranslationMessageEntityRepository.php
-  - src/Dto/Catalog/LocaleCatalogMessageDto.php
-  - src/Service/Catalog/LocaleFilesystemCatalogScanner.php
-  - src/Service/Catalog/LocaleSymfonyCatalogExporter.php
-  - src/Service/Locale/LocaleCodeNameConverter.php
-  - src/Service/Locale/LocaleFallbackResolver.php
-  - src/Service/Locale/LocaleRegistry.php
-  - src/Service/Quality/LocaleCatalogAuditor.php
-  - src/ServiceInterface/Catalog/LocaleCatalogExporterInterface.php
-  - src/ServiceInterface/Catalog/LocaleCatalogScannerInterface.php
-  - src/ServiceInterface/Locale/LocaleCodeNameConverterInterface.php
-  - src/ServiceInterface/Locale/LocaleFallbackResolverInterface.php
-  - src/ServiceInterface/Locale/LocaleRegistryInterface.php
-  - src/ServiceInterface/Quality/LocaleCatalogAuditorInterface.php
+  - src/DTO/Catalog/LocaleCatalogMessageDTO.php
+  - src/Service/Catalog/LocaleCatalogScannerService.php
+  - src/Service/Catalog/LocaleCatalogExporterService.php
+  - src/Service/LocaleCodeNameConverterService.php
+  - src/Resolver/LocaleFallbackResolver.php
+  - src/Service/LocaleRegistryService.php
+  - src/Service/Quality/LocaleCatalogAuditorService.php
+  - src/ServiceInterface/Catalog/LocaleCatalogExporterServiceInterface.php
+  - src/ServiceInterface/Catalog/LocaleCatalogScannerServiceInterface.php
+  - src/ServiceInterface/LocaleCodeNameConverterServiceInterface.php
+  - src/Resolver/LocaleFallbackResolverInterface.php
+  - src/ServiceInterface/LocaleRegistryServiceInterface.php
+  - src/ServiceInterface/Quality/LocaleCatalogAuditorServiceInterface.php
   - src/ValueObject/LocaleCode.php
   - src/ValueObject/LocaleTranslationKeyName.php
   - tests/DataFixtures/LocaleDemoFixturesContractTest.php
@@ -100,9 +100,9 @@ w08:
   name: localizing-w08-phpstan-batch02
   type: static-analysis-fix
   scope:
-    - src/Service/Catalog/LocaleFilesystemCatalogScanner.php
-    - src/Service/Catalog/LocaleSymfonyCatalogExporter.php
-    - src/Service/Locale/LocaleFallbackResolver.php
+    - src/Service/Catalog/LocaleCatalogScannerService.php
+    - src/Service/Catalog/LocaleCatalogExporterService.php
+    - src/Resolver/LocaleFallbackResolver.php
     - src/Service/Template/LocaleTemplateContextProvider.php
     - tests/DataFixtures/LocaleDemoFixturesContractTest.php
   fixes:
@@ -116,6 +116,6 @@ w09:
   name: localizing-w09-phpstan-final-exporter
   type: static-analysis-fix
   scope:
-    - src/Service/Catalog/LocaleSymfonyCatalogExporter.php
+    - src/Service/Catalog/LocaleCatalogExporterService.php
   fixes:
     - Remove impossible null branch after array_shift on non-empty-list<string>.

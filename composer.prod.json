@@ -6,6 +6,7 @@
   "require": {
     "php": ">=8.4",
     "ext-intl": "*",
+    "collectioning/collection": "dev-main || dev-master",
     "cruding/crud": "dev-master",
     "doctrine/doctrine-bundle": "^3.0",
     "doctrine/doctrine-migrations-bundle": "^4.0",
@@ -13,6 +14,7 @@
     "easycorp/easyadmin-bundle": "^5.0",
     "interfacing/interface": "dev-master",
     "objecting/object": "dev-master",
+    "tabling/table": "dev-backend-table-actions || dev-backend-table-metadata || dev-initial-platform-primitive || dev-main || dev-master",
     "symfony/console": "^8.1",
     "symfony/dotenv": "^8.1",
     "symfony/framework-bundle": "^8.1",

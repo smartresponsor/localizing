@@ -6,6 +6,7 @@
   "require": {
     "php": ">=8.4",
     "ext-intl": "*",
+    "collectioning/collection": "dev-master",
     "cruding/crud": "dev-master",
     "doctrine/doctrine-bundle": "^3.0",
     "doctrine/doctrine-migrations-bundle": "^4.0",
@@ -13,6 +14,7 @@
     "easycorp/easyadmin-bundle": "^5.0",
     "interfacing/interface": "dev-master",
     "objecting/object": "dev-master",
+    "tabling/table": "dev-master",
     "symfony/console": "^8.1",
     "symfony/dotenv": "^8.1",
     "symfony/framework-bundle": "^8.1",
@@ -26,7 +28,9 @@
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.95",
     "phpstan/phpstan": "^2.1",
-    "phpunit/phpunit": "^12.0"
+    "phpunit/phpunit": "^12.0",
+    "symfony/panther": "^2.0",
+    "symfony/test-pack": "^1.2"
   },
   "autoload": {
     "psr-4": {
@@ -44,7 +48,12 @@
     "cs:fix": "php-cs-fixer fix --verbose",
     "phpstan": "phpstan analyse -c phpstan.neon --memory-limit=1G",
     "test": "phpunit",
-    "gating": "@php ../Gating/bin/gating check --target=. --policy-root=../Gating/.gating --severity-config=../Gating/.gating/config/severity.yaml",
+    "test:coverage": [
+      "@php -r \"if (!is_dir('var/coverage')) { mkdir('var/coverage', 0777, true); }\"",
+      "@php -d xdebug.mode=coverage vendor/bin/phpunit --path-coverage --coverage-text=var/coverage/summary.txt"
+    ],
+    "test:behavioral-coverage": "@php bin/generate-behavioral-ui-coverage.php",
+    "gating": "@php ../Gating/bin/gating check --target=. --profile=.gating/profile/component/localizing.yaml --policy-root=../Gating/.gating --severity-config=../Gating/.gating/config/severity.yaml",
     "doctrine:schema:validate": "@php bin/console doctrine:schema:validate --skip-sync --env=test",
     "doctrine:schema:parity": [
       "@doctrine:schema:validate",
@@ -59,6 +68,7 @@
       "@test",
       "@localizing:audit",
       "@doctrine:schema:parity",
+      "@test:behavioral-coverage",
       "@gating"
     ]
   },
@@ -67,33 +77,67 @@
       "symfony/runtime": true
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "repositories": [
+    {
+      "type": "path",
+      "url": "../Collectioning",
+      "options": {
+        "symlink": true,
+        "versions": {
+          "collectioning/collection": "dev-master"
+        }
+      }
+    },
     {
       "type": "path",
       "url": "../Cruding",
       "options": {
-        "symlink": true
+        "symlink": true,
+        "versions": {
+          "cruding/crud": "dev-master"
+        }
       }
     },
     {
       "type": "path",
       "url": "../Interfacing",
       "options": {
-        "symlink": true
+        "symlink": true,
+        "versions": {
+          "interfacing/interface": "dev-master"
+        }
       }
     },
     {
       "type": "path",
       "url": "../Objecting",
       "options": {
-        "symlink": true
+        "symlink": true,
+        "versions": {
+          "objecting/object": "dev-master"
+        }
+      }
+    },
+    {
+      "type": "path",
+      "url": "../Tabling",
+      "options": {
+        "symlink": true,
+        "versions": {
+          "tabling/table": "dev-master"
+        }
       }
     },
     {
       "type": "path",
       "url": "../Viewing",
       "options": {
-        "symlink": true
+        "symlink": true,
+        "versions": {
+          "viewing/view": "dev-master"
+        }
       }
     }
   ]

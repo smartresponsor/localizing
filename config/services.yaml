@@ -29,22 +29,22 @@ services:
     public: true
     tags: ['controller.service_arguments']
 
-  App\Localizing\Service\Locale\LocaleRegistry:
+  App\Localizing\Service\LocaleRegistryService:
     arguments:
       $configuredLocales: '%localizing.supported_locales%'
       $defaultLocaleCode: '%localizing.default_locale%'
 
-  App\Localizing\Service\Catalog\LocaleFilesystemCatalogScanner:
+  App\Localizing\Service\Catalog\LocaleCatalogScannerService:
     arguments:
       $catalogDirectory: '%localizing.catalog_source_dir%'
 
-  App\Localizing\Service\Catalog\LocaleSymfonyCatalogExporter:
+  App\Localizing\Service\Catalog\LocaleCatalogExporterService:
     arguments:
       $exportDirectory: '%localizing.catalog_export_dir%'
 
-  App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerInterface: '@App\Localizing\Service\Catalog\LocaleFilesystemCatalogScanner'
-  App\Localizing\ServiceInterface\Catalog\LocaleCatalogExporterInterface: '@App\Localizing\Service\Catalog\LocaleSymfonyCatalogExporter'
-  App\Localizing\ServiceInterface\Quality\LocaleCatalogAuditorInterface: '@App\Localizing\Service\Quality\LocaleCatalogAuditor'
-  App\Localizing\ServiceInterface\Locale\LocaleCodeNameConverterInterface: '@App\Localizing\Service\Locale\LocaleCodeNameConverter'
-  App\Localizing\ServiceInterface\Locale\LocaleFallbackResolverInterface: '@App\Localizing\Service\Locale\LocaleFallbackResolver'
-  App\Localizing\ServiceInterface\Locale\LocaleRegistryInterface: '@App\Localizing\Service\Locale\LocaleRegistry'
+  App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerServiceInterface: '@App\Localizing\Service\Catalog\LocaleCatalogScannerService'
+  App\Localizing\ServiceInterface\Catalog\LocaleCatalogExporterServiceInterface: '@App\Localizing\Service\Catalog\LocaleCatalogExporterService'
+  App\Localizing\ServiceInterface\Quality\LocaleCatalogAuditorServiceInterface: '@App\Localizing\Service\Quality\LocaleCatalogAuditorService'
+  App\Localizing\ServiceInterface\LocaleCodeNameConverterServiceInterface: '@App\Localizing\Service\LocaleCodeNameConverterService'
+  App\Localizing\Resolver\LocaleFallbackResolverInterface: '@App\Localizing\Resolver\LocaleFallbackResolver'
+  App\Localizing\ServiceInterface\LocaleRegistryServiceInterface: '@App\Localizing\Service\LocaleRegistryService'

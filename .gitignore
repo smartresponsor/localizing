@@ -3,6 +3,18 @@
 /report/
 composer.lock
 
+# Generated Symfony reference
+/config/reference.php
+
+# Local orchestration/tooling state
+/.php-cs-fixer.dist.php
+/.gating/*
+!/.gating/profile/
+/.gating/profile/*
+!/.gating/profile/component/
+/.gating/profile/component/*
+!/.gating/profile/component/localizing.yaml
+
 # Local environment
 .env.local
 .env.*.local

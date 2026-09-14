@@ -6,7 +6,7 @@ The canonical component PHP namespace is `App\Localizing\...`, derived from the 
 
 The core business entity family lives under `App\Localizing\Entity\...` and uses the canonical `Locale*` subject prefix.
 
-Service classes use the `Locale` prefix plus a suffix describing the PHP class form or service responsibility, for example `LocaleRegistry`, `LocaleFilesystemCatalogScanner`, `LocaleSymfonyCatalogExporter`, and `LocaleCatalogAuditor`.
+Service classes use the `Locale` prefix plus an explicit technical-role suffix, for example `LocaleRegistryService`, `LocaleCatalogScannerService`, `LocaleCatalogExporterService`, and `LocaleCatalogAuditorService`; resolver responsibilities live under the separate `Resolver` role.
 
 Controller classes follow the same component convention and use the `Locale` prefix, for example `LocaleCatalogController`.
 

@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="vendor/autoload.php" colors="true">
+  <php>
+    <server name="KERNEL_CLASS" value="App\Localizing\Kernel"/>
+    <server name="APP_ENV" value="test" force="true"/>
+    <server name="APP_DEBUG" value="1" force="true"/>
+    <server name="APP_SECRET" value="localizing-test-secret"/>
+    <server name="APP_LOCALE" value="en"/>
+    <server name="APP_FALLBACK_LOCALE" value="en"/>
+    <server name="DATABASE_URL" value="sqlite:///:memory:"/>
+  </php>
+  <source>
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+  </source>
+  <coverage includeUncoveredFiles="true"/>
   <testsuites>
     <testsuite name="Localizing Test Suite">
       <directory>tests</directory>
