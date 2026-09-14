@@ -129,4 +129,6 @@
 - Final `composer quality` is green: syntax, PHP-CS-Fixer, PHPStan, PHPUnit, catalog audit, Doctrine mapping/migration currentness, behavioral evidence generation, and embedded Gating all pass.
 - Final standalone Gating result: 61 rules, 0 failed, 0 warning, 0 suppressed, 10 skipped. Canon031, Canon040, Canon042, and Canon043 all pass.
 - Temporary PHPUnit XML diagnostics used to isolate path-accounting debt were removed from the canonical Composer coverage script; persistent release evidence remains the canonical text summary.
-- No commit or push was performed. Git packaging remains a separate guarded integration step pending the final worktree/branch status check.
+- Git packaging attempt exposed an index-isolation hazard in the Console signed-commit primitive: a local signed commit `cdfab8675628256c5981ef4e93bbfab647d332c0` was created on protected `master` while packaging the journal because previously staged `config/reference.php` untracking and the DTO rename were already present in the index. Nothing was pushed.
+- Created checkpoint branch `checkpoint/localizing-rc-20260914` at `cdfab8675628256c5981ef4e93bbfab647d332c0` so that commit is durably referenced. Switching to the checkpoint branch is guard-blocked because the working tree remains dirty.
+- Current protected `master` is ahead 3 / behind 0 with 79 dirty entries. No further commits, reset, clean, push, or branch-repoint workaround was attempted because Console exposes no safe reset/repoint primitive in the current capability envelope.
