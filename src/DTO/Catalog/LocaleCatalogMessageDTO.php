@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Dto\Catalog;
+namespace App\Localizing\DTO\Catalog;
 
-final readonly class LocaleCatalogMessageDto
+final readonly class LocaleCatalogMessageDTO
 {
     public function __construct(
         public string $localeCode,
