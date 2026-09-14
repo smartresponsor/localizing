@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Service\Locale;
+namespace App\Localizing\Service;
 
 use App\Localizing\Exception\LocaleNotFoundException;
-use App\Localizing\ServiceInterface\Locale\LocaleRegistryInterface;
+use App\Localizing\ServiceInterface\LocaleRegistryServiceInterface;
 
-final readonly class LocaleRegistry implements LocaleRegistryInterface
+/**
+ * Normalizes configured locale codes and enforces runtime locale availability.
+ */
+final readonly class LocaleRegistryService implements LocaleRegistryServiceInterface
 {
     /** @param list<string> $configuredLocales */
     public function __construct(private array $configuredLocales, private string $defaultLocaleCode = 'en')
@@ -29,7 +32,8 @@ final readonly class LocaleRegistry implements LocaleRegistryInterface
     public function assertAvailable(string $localeCode): void
     {
         $available = $this->getAvailableLocaleCodes();
-        if (!in_array($localeCode, $available, true)) {
+        $availableSet = array_fill_keys($available, true);
+        if (!isset($availableSet[$localeCode])) {
             throw LocaleNotFoundException::notAvailable($localeCode, $available);
         }
     }

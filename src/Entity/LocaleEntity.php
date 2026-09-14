@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: LocaleEntityRepository::class)]
 #[ORM\Table(name: 'locale_locale')]
 #[ORM\UniqueConstraint(name: 'uniq_locale_code', columns: ['code'])]
+/**
+ * Persists a supported locale with its display name, enabled state, and priority.
+ */
 class LocaleEntity
 {
     use ObjectAuditEmbeddableTrait;
@@ -69,12 +72,18 @@ class LocaleEntity
         return $this->priority;
     }
 
+    /**
+     * Enables the locale and records the entity modification timestamp.
+     */
     public function enable(): void
     {
         $this->enabled = true;
         $this->touchModified();
     }
 
+    /**
+     * Disables the locale and records the entity modification timestamp.
+     */
     public function disable(): void
     {
         $this->enabled = false;

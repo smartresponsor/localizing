@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Localizing\Service\Catalog;
 
-use App\Localizing\ServiceInterface\Catalog\LocaleCatalogExporterInterface;
+use App\Localizing\ServiceInterface\Catalog\LocaleCatalogExporterServiceInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 
-final readonly class LocaleSymfonyCatalogExporter implements LocaleCatalogExporterInterface
+/**
+ * Groups normalized messages and writes deterministic Symfony translation catalog files.
+ */
+final readonly class LocaleCatalogExporterService implements LocaleCatalogExporterServiceInterface
 {
     public function __construct(private string $exportDirectory, private Filesystem $filesystem = new Filesystem())
     {

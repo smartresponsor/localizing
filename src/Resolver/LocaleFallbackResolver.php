@@ -2,17 +2,22 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Service\Locale;
+namespace App\Localizing\Resolver;
 
-use App\Localizing\ServiceInterface\Locale\LocaleFallbackResolverInterface;
-use App\Localizing\ServiceInterface\Locale\LocaleRegistryInterface;
+use App\Localizing\ServiceInterface\LocaleRegistryServiceInterface;
 
+/**
+ * Builds deterministic locale fallback chains from regional and default locale rules.
+ */
 final readonly class LocaleFallbackResolver implements LocaleFallbackResolverInterface
 {
-    public function __construct(private LocaleRegistryInterface $localeRegistry)
+    public function __construct(private LocaleRegistryServiceInterface $localeRegistry)
     {
     }
 
+    /**
+     * Returns the requested locale, its language fallback, and the configured default without duplicates.
+     */
     public function resolveFallbackChain(string $localeCode): array
     {
         $chain = [$localeCode];

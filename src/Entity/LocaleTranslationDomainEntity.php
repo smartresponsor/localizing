@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: LocaleTranslationDomainEntityRepository::class)]
 #[ORM\Table(name: 'locale_translation_domain')]
 #[ORM\UniqueConstraint(name: 'uniq_locale_translation_domain_name', columns: ['name'])]
+/**
+ * Persists a named translation domain and the component that owns it.
+ */
 class LocaleTranslationDomainEntity
 {
     use ObjectAuditEmbeddableTrait;

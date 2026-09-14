@@ -10,6 +10,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Manages persisted translation messages and idempotent message updates for maintainers.
+ */
 final readonly class LocaleTranslationMessageAdminController
 {
     public function __construct(
@@ -18,6 +21,9 @@ final readonly class LocaleTranslationMessageAdminController
     ) {
     }
 
+    /**
+     * Returns translation messages filtered by locale, domain, or translation key.
+     */
     public function list(Request $request): JsonResponse
     {
         $criteria = [];
@@ -42,6 +48,9 @@ final readonly class LocaleTranslationMessageAdminController
         return new JsonResponse(['messages' => $messages, 'total' => count($messages)]);
     }
 
+    /**
+     * Creates a translation message or updates the existing locale/domain/key record in place.
+     */
     public function upsert(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);

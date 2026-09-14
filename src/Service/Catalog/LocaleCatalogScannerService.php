@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Localizing\Service\Catalog;
 
-use App\Localizing\Dto\Catalog\LocaleCatalogMessageDto;
-use App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
+use App\Localizing\DTO\Catalog\LocaleCatalogMessageDTO;
+use App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerServiceInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
 
-final readonly class LocaleFilesystemCatalogScanner implements LocaleCatalogScannerInterface
+/**
+ * Scans configured translation files and normalizes them into catalog message DTOs.
+ */
+final readonly class LocaleCatalogScannerService implements LocaleCatalogScannerServiceInterface
 {
     public function __construct(private string $catalogDirectory)
     {
@@ -34,7 +37,7 @@ final readonly class LocaleFilesystemCatalogScanner implements LocaleCatalogScan
 
             foreach ($this->flatten($payload) as $key => $message) {
                 if (is_scalar($message)) {
-                    $messages[] = new LocaleCatalogMessageDto($locale, $domain, $key, (string) $message, $file->getPathname());
+                    $messages[] = new LocaleCatalogMessageDTO($locale, $domain, $key, (string) $message, $file->getPathname());
                 }
             }
         }

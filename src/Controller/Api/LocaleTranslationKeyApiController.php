@@ -8,6 +8,9 @@ use App\Localizing\Repository\LocaleTranslationKeyEntityRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Publishes translation key metadata for runtime and tooling consumers.
+ */
 final readonly class LocaleTranslationKeyApiController
 {
     public function __construct(
@@ -15,12 +18,15 @@ final readonly class LocaleTranslationKeyApiController
     ) {
     }
 
+    /**
+     * Returns translation keys filtered by an optional domain query parameter.
+     */
     public function __invoke(Request $request): JsonResponse
     {
         $criteria = [];
-        $domain = $request->query->get('domain');
-        if (is_string($domain) && '' !== trim($domain)) {
-            $criteria['domainName'] = trim($domain);
+        $domain = trim($request->query->getString('domain'));
+        if ('' !== $domain) {
+            $criteria['domainName'] = $domain;
         }
 
         $keys = array_map(

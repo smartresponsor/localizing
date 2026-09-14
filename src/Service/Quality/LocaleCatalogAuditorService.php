@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace App\Localizing\Service\Quality;
 
-use App\Localizing\Dto\Catalog\LocaleCatalogMessageDto;
-use App\Localizing\ServiceInterface\Locale\LocaleRegistryInterface;
-use App\Localizing\ServiceInterface\Quality\LocaleCatalogAuditorInterface;
+use App\Localizing\DTO\Catalog\LocaleCatalogMessageDTO;
+use App\Localizing\ServiceInterface\LocaleRegistryServiceInterface;
+use App\Localizing\ServiceInterface\Quality\LocaleCatalogAuditorServiceInterface;
 
-final readonly class LocaleCatalogAuditor implements LocaleCatalogAuditorInterface
+/**
+ * Detects unsupported locales, empty messages, and missing default-locale translations.
+ */
+final readonly class LocaleCatalogAuditorService implements LocaleCatalogAuditorServiceInterface
 {
-    public function __construct(private LocaleRegistryInterface $localeRegistry)
+    public function __construct(private LocaleRegistryServiceInterface $localeRegistry)
     {
     }
 
@@ -50,7 +53,7 @@ final readonly class LocaleCatalogAuditor implements LocaleCatalogAuditorInterfa
     }
 
     /** @return array{severity:string, code:string, domain:string, key:string, locale:?string, message:string} */
-    private function finding(string $severity, string $code, LocaleCatalogMessageDto $message, string $text): array
+    private function finding(string $severity, string $code, LocaleCatalogMessageDTO $message, string $text): array
     {
         return [
             'severity' => $severity,

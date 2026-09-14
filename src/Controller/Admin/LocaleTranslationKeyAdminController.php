@@ -10,6 +10,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Manages translation-key registration and filtered key discovery for maintainers.
+ */
 final readonly class LocaleTranslationKeyAdminController
 {
     public function __construct(
@@ -18,6 +21,9 @@ final readonly class LocaleTranslationKeyAdminController
     ) {
     }
 
+    /**
+     * Returns translation keys optionally filtered by domain and ordered deterministically.
+     */
     public function list(Request $request): JsonResponse
     {
         $criteria = [];
@@ -39,6 +45,9 @@ final readonly class LocaleTranslationKeyAdminController
         return new JsonResponse(['keys' => $keys, 'total' => count($keys)]);
     }
 
+    /**
+     * Validates and persists a unique translation key within its domain.
+     */
     public function register(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);

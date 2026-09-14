@@ -10,6 +10,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Manages approved terminology entries used to keep translations lexically consistent.
+ */
 final readonly class LocaleTerminologyAdminController
 {
     public function __construct(
@@ -18,6 +21,9 @@ final readonly class LocaleTerminologyAdminController
     ) {
     }
 
+    /**
+     * Returns terminology entries optionally filtered by locale and ordered for review.
+     */
     public function list(Request $request): JsonResponse
     {
         $criteria = [];
@@ -40,6 +46,9 @@ final readonly class LocaleTerminologyAdminController
         return new JsonResponse(['entries' => $entries, 'total' => count($entries)]);
     }
 
+    /**
+     * Validates and persists a unique approved term for a locale and source term.
+     */
     public function register(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -81,6 +90,9 @@ final readonly class LocaleTerminologyAdminController
         ], 201);
     }
 
+    /**
+     * Updates an existing approved term and note while preserving its stable identity.
+     */
     public function update(int $id, Request $request): JsonResponse
     {
         $entry = $this->terminologyRepository->find($id);

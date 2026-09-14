@@ -6,20 +6,26 @@ namespace App\Localizing\Controller\Admin;
 
 use App\Localizing\Entity\LocaleEntity;
 use App\Localizing\Repository\LocaleEntityRepository;
-use App\Localizing\ServiceInterface\Locale\LocaleCodeNameConverterInterface;
+use App\Localizing\ServiceInterface\LocaleCodeNameConverterServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Manages locale registration, ordering, and enabled state through administrative endpoints.
+ */
 final readonly class LocaleAdminController
 {
     public function __construct(
         private LocaleEntityRepository $localeRepository,
-        private LocaleCodeNameConverterInterface $codeNameConverter,
+        private LocaleCodeNameConverterServiceInterface $codeNameConverter,
         private EntityManagerInterface $entityManager,
     ) {
     }
 
+    /**
+     * Returns registered locales ordered by operational priority and locale code.
+     */
     public function list(): JsonResponse
     {
         $locales = array_map(
@@ -36,6 +42,9 @@ final readonly class LocaleAdminController
         return new JsonResponse(['locales' => $locales, 'total' => count($locales)]);
     }
 
+    /**
+     * Validates and persists a unique locale, deriving its display name when omitted.
+     */
     public function register(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -76,6 +85,9 @@ final readonly class LocaleAdminController
         ], 201);
     }
 
+    /**
+     * Enables an existing locale or reports that the requested locale does not exist.
+     */
     public function enable(string $slug): JsonResponse
     {
         $locale = $this->localeRepository->findOneBy(['code' => $slug]);
@@ -89,6 +101,9 @@ final readonly class LocaleAdminController
         return new JsonResponse(['code' => $locale->getCode(), 'enabled' => true]);
     }
 
+    /**
+     * Disables an existing locale or reports that the requested locale does not exist.
+     */
     public function disable(string $slug): JsonResponse
     {
         $locale = $this->localeRepository->findOneBy(['code' => $slug]);

@@ -4,18 +4,24 @@ declare(strict_types=1);
 
 namespace App\Localizing\Controller\Admin;
 
-use App\Localizing\ServiceInterface\Catalog\LocaleCatalogExporterInterface;
-use App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
+use App\Localizing\ServiceInterface\Catalog\LocaleCatalogExporterServiceInterface;
+use App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/**
+ * Provides administrative catalog inspection and export operations for localization maintainers.
+ */
 final readonly class LocaleCatalogAdminController
 {
     public function __construct(
-        private LocaleCatalogScannerInterface $scanner,
-        private LocaleCatalogExporterInterface $exporter,
+        private LocaleCatalogScannerServiceInterface $scanner,
+        private LocaleCatalogExporterServiceInterface $exporter,
     ) {
     }
 
+    /**
+     * Returns the currently discovered catalog messages with their source metadata.
+     */
     public function scan(): JsonResponse
     {
         $messages = $this->scanner->scan();
@@ -35,6 +41,9 @@ final readonly class LocaleCatalogAdminController
         ]);
     }
 
+    /**
+     * Exports the currently discovered messages and reports scan and file counts.
+     */
     public function export(): JsonResponse
     {
         $messages = $this->scanner->scan();

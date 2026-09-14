@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocaleTranslationAuditFindingEntityRepository::class)]
 #[ORM\Table(name: 'locale_translation_audit_finding')]
+/**
+ * Persists one structured translation-quality finding produced by catalog auditing.
+ */
 class LocaleTranslationAuditFindingEntity
 {
     use ObjectAuditEmbeddableTrait;

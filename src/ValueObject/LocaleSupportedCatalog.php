@@ -11,7 +11,7 @@ namespace App\Localizing\ValueObject;
  * rows in LocaleEntity, while this catalog provides stable semantic constants
  * and default currency hints for seeders/configuration.
  */
-final class SupportedLocale
+final class LocaleSupportedCatalog
 {
     public const EN = 'en';
     public const EN_US = 'en_US';

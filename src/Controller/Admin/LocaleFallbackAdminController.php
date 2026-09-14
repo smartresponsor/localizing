@@ -10,6 +10,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Manages persisted locale fallback chains through the administrative API.
+ */
 final readonly class LocaleFallbackAdminController
 {
     public function __construct(
@@ -18,6 +21,9 @@ final readonly class LocaleFallbackAdminController
     ) {
     }
 
+    /**
+     * Returns fallback entries for a locale ordered by their configured position.
+     */
     public function list(string $slug): JsonResponse
     {
         $fallbacks = array_map(
@@ -33,6 +39,9 @@ final readonly class LocaleFallbackAdminController
         return new JsonResponse(['locale' => $slug, 'fallbacks' => $fallbacks]);
     }
 
+    /**
+     * Validates and persists a unique fallback entry for the requested locale.
+     */
     public function add(string $slug, Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -69,6 +78,9 @@ final readonly class LocaleFallbackAdminController
         ], 201);
     }
 
+    /**
+     * Removes an existing fallback entry or reports that the identifier was not found.
+     */
     public function remove(int $id): JsonResponse
     {
         $fallback = $this->fallbackRepository->find($id);

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Localizing\Command;
 
-use App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
-use App\Localizing\ServiceInterface\Quality\LocaleCatalogAuditorInterface;
+use App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerServiceInterface;
+use App\Localizing\ServiceInterface\Quality\LocaleCatalogAuditorServiceInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,13 +13,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(name: 'localizing:audit-catalogs', description: 'Audit ecosystem translation catalogs.')]
+/**
+ * Audits discovered translation catalogs and reports actionable localization findings.
+ */
 final class LocaleAuditCatalogsCommand extends Command
 {
-    public function __construct(private readonly LocaleCatalogScannerInterface $scanner, private readonly LocaleCatalogAuditorInterface $auditor)
+    public function __construct(private readonly LocaleCatalogScannerServiceInterface $scanner, private readonly LocaleCatalogAuditorServiceInterface $auditor)
     {
         parent::__construct();
     }
 
+    /**
+     * Scans configured catalogs, prints every finding, and fails on error-severity findings.
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

@@ -6,22 +6,28 @@ namespace App\Localizing\Controller\Admin;
 
 use App\Localizing\Entity\LocaleTranslationAuditFindingEntity;
 use App\Localizing\Repository\LocaleTranslationAuditFindingEntityRepository;
-use App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerInterface;
-use App\Localizing\ServiceInterface\Quality\LocaleCatalogAuditorInterface;
+use App\Localizing\ServiceInterface\Catalog\LocaleCatalogScannerServiceInterface;
+use App\Localizing\ServiceInterface\Quality\LocaleCatalogAuditorServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Manages persisted translation audit findings and explicit audit execution.
+ */
 final readonly class LocaleTranslationAuditAdminController
 {
     public function __construct(
         private LocaleTranslationAuditFindingEntityRepository $findingRepository,
-        private LocaleCatalogScannerInterface $scanner,
-        private LocaleCatalogAuditorInterface $auditor,
+        private LocaleCatalogScannerServiceInterface $scanner,
+        private LocaleCatalogAuditorServiceInterface $auditor,
         private EntityManagerInterface $entityManager,
     ) {
     }
 
+    /**
+     * Returns persisted audit findings filtered by severity, domain, or locale criteria.
+     */
     public function findings(Request $request): JsonResponse
     {
         $criteria = [];
@@ -56,6 +62,9 @@ final readonly class LocaleTranslationAuditAdminController
         return new JsonResponse(['findings' => $findings, 'total' => count($findings)]);
     }
 
+    /**
+     * Rebuilds persisted audit findings from the current catalog scan and returns the fresh result set.
+     */
     public function run(): JsonResponse
     {
         $messages = $this->scanner->scan();

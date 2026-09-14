@@ -2,14 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Service\Locale;
+namespace App\Localizing\Service;
 
-use App\Localizing\ServiceInterface\Locale\LocaleCodeNameConverterInterface;
+use App\Localizing\ServiceInterface\LocaleCodeNameConverterServiceInterface;
 use Symfony\Component\Intl\Exception\MissingResourceException;
 use Symfony\Component\Intl\Locales;
 
-final class LocaleCodeNameConverter implements LocaleCodeNameConverterInterface
+/**
+ * Uses Symfony Intl locale data to translate between locale codes and display names.
+ */
+final class LocaleCodeNameConverterService implements LocaleCodeNameConverterServiceInterface
 {
+    /**
+     * Resolves a localized display name to its locale code using Symfony Intl data.
+     */
     public function convertNameToCode(string $name, ?string $displayLocaleCode = null): string
     {
         $names = Locales::getNames($displayLocaleCode ?? 'en');
@@ -22,6 +28,9 @@ final class LocaleCodeNameConverter implements LocaleCodeNameConverterInterface
         return $code;
     }
 
+    /**
+     * Resolves a locale code to a display name in the requested display locale.
+     */
     public function convertCodeToName(string $code, ?string $displayLocaleCode = null): string
     {
         try {

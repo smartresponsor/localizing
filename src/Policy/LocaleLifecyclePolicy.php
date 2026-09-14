@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Localizing\Lifecycle;
+namespace App\Localizing\Policy;
 
 /**
  * Lifecycle guard for locale.
