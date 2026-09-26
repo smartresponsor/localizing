@@ -2,7 +2,7 @@
   "name": "localizing/locale",
   "type": "library",
   "description": "Localizing process app",
-  "license": "proprietary",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "require": {
     "php": ">=8.4",
     "ext-intl": "*",
@@ -30,7 +30,8 @@
     "phpstan/phpstan": "^2.1",
     "phpunit/phpunit": "^12.0",
     "symfony/panther": "^2.0",
-    "symfony/test-pack": "^1.2"
+    "symfony/test-pack": "^1.2",
+    "gating/gate": "dev-master"
   },
   "autoload": {
     "psr-4": {
@@ -53,7 +54,6 @@
       "@php -d xdebug.mode=coverage vendor/bin/phpunit --path-coverage --coverage-text=var/coverage/summary.txt"
     ],
     "test:behavioral-coverage": "@php bin/generate-behavioral-ui-coverage.php",
-    "gating": "@php ../Gating/bin/gating check --target=. --profile=.gating/profile/component/localizing.yaml --policy-root=../Gating/.gating --severity-config=../Gating/.gating/config/severity.yaml",
     "doctrine:schema:validate": "@php bin/console doctrine:schema:validate --skip-sync --env=test",
     "doctrine:schema:parity": [
       "@doctrine:schema:validate",
@@ -69,8 +69,9 @@
       "@localizing:audit",
       "@doctrine:schema:parity",
       "@test:behavioral-coverage",
-      "@gating"
-    ]
+      "@gate"
+    ],
+    "gate": "@php vendor/bin/gating check --target=."
   },
   "config": {
     "allow-plugins": {
@@ -137,6 +138,16 @@
         "symlink": true,
         "versions": {
           "viewing/view": "dev-master"
+        }
+      }
+    },
+    {
+      "type": "path",
+      "url": "../Gating",
+      "options": {
+        "symlink": true,
+        "versions": {
+          "gating/gate": "dev-master"
         }
       }
     }
