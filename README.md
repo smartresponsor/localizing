@@ -1,6 +1,6 @@
 # Localizing
 
-Localizing is the internationalization and translation management component of the Smart Responsor platform. It governs the locale registry, fallback policies, missing translation tracking, translation glossaries, and catalog imports/exports.
+Localizing is the internationalization and translation management component of the multi-domain SaaS platform. It governs the locale registry, fallback policies, missing translation tracking, translation glossaries, and catalog imports/exports.
 
 This module is **not** a synchronous, real-time translation server. It compiles and exports validated translation catalogs that host Symfony applications read at runtime.
 

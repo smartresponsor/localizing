@@ -134,3 +134,26 @@
 - The worktree reached clean state and was switched from protected `master` to `feature/localizing-rc-20260914` at `fdf78ebe93ae328446209d589dcb163bc1127b8f`. A safety checkpoint branch `checkpoint/localizing-rc-20260914` remains at `cdfab8675628256c5981ef4e93bbfab647d332c0`.
 - Full `composer quality` and standalone Gating were rerun on the feature branch and remain green; Gating reports 61 rules, 0 failed, 0 warning, 0 suppressed, 10 skipped.
 - Protected `master` was never pushed. The remaining integration step is to push `feature/localizing-rc-20260914` and open a PR to `master`.
+
+## engine-20260926083608-localizing-b8762b — 2026-09-26
+
+### Reconnaissance and RC baseline
+
+- Re-read the authoritative Localizing execution specification, repository docs, Composer/runtime configuration, current Git state, and the existing orchestration journal.
+- Re-read the mandatory Objecting, Cruding, Viewing, Interfacing, Gating, and Canonization contours. Localizing remains a Symfony-first catalog-governance component; generic CRUD stays in Cruding, reusable system fields in Objecting, presentation rendering in Viewing, and interface shell assets in Interfacing.
+- Current branch: `feature/localizing-rc-20260914`; pre-existing dirty paths are `.gating/README.md`, `composer.json`, `composer.prod.json`, `LICENSE`, and `NOTICE`. These are preserved and classified rather than reset/cleaned.
+- Market baseline: Symfony 8.1 provides runtime fallback-chain primitives; mature localization platforms additionally emphasize terminology/glossary consistency, translation memory, review/history, QA, pseudolocalization, and contextual screenshots. Localizing should own deterministic catalog governance/export rather than request-time translation serving.
+- Canon consulted for this pass: `Canon043DevelopmentComposerDependencyVersionRule.md` and `Canon052GatingIntegrationRule.md`. Canon052 is directly applicable: consumer `.gating/` is artifact-only; `gating/gate` is a dev dependency; the canonical entrypoint is Composer `gate`; `quality` includes `@gate`.
+- Baseline verification: `composer validate --strict` is green. The legacy `composer gating` script is red because it references missing `.gating/profile/component/localizing.yaml`; `composer gate` is initially red because `gating/gate` is declared in the working manifest but not yet installed/locked.
+- RC-critical workstream: complete Canon052 consumer wiring without restoring normative configuration into consumer `.gating/`, update the lock/install state, then run full deterministic quality gates and reconcile Git.
+- Growth workstream: translation memory, review workflow/history, richer terminology UX, in-context screenshots, pseudolocalization, and provider/AI-assisted translation remain post-RC unless later required for correctness.
+
+### Implementation and verification
+
+- Replaced the obsolete profile-based `gating` Composer script with the Canon052 standard `gate` path already being introduced in the working manifest; `quality` now calls only `@gate`.
+- Completed the declared Gating dependency installation/lock resolution through a package-scoped Composer update. The local `gating/gate` package is junctioned from `../Gating`; Composer reported no security advisories.
+- The updated owner gate introduced Canon055. Read `Canon055PlatformIdentityTerminologyRule.md` and corrected the three current human-facing consumer-as-platform aliases in `AGENTS.md`, `README.md`, and `README.adoc`.
+- Final deterministic sub-gates are green: Composer strict validation; PHP syntax 75/75; PHP-CS-Fixer 0 fixes; PHPStan 0 errors; PHPUnit 48 tests / 379 assertions; catalog audit 12 messages / 0 findings; Doctrine mapping + migration currentness; behavioral evidence functional 2/2, behavioral 2/2, UI 0/0, critical 1/1; standard Gating 0 failed / 0 warning / 2 profile-dependent skips.
+- The aggregate `composer quality` worker was not admitted under temporary runtime-capacity WATCH, so the exact declared sub-gates were executed separately. A later synchronous aggregate attempt exceeded the MCP orchestration call timeout; no constituent gate failure was observed.
+- No browser/UI code changed in this pass. The repository's declared behavioral inventory reports UI 0/0, so screenshot generation is not applicable to this change.
+- Git packaging was completed after semantic classification of the pre-existing dirty set. `.gating/README.md`, `composer.json`, `composer.prod.json`, `LICENSE`, and `NOTICE` form one coherent package-policy change (licensing plus Canon052 Gating integration) and were committed together as signed commit `b3c002f` (`chore: align licensing and canonical gating integration`). Canon055 documentation and this journal remain isolated for a separate commit.
