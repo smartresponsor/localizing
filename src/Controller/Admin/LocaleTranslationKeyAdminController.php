@@ -10,6 +10,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Manages translation-key registration and filtered key discovery for maintainers.
+ */
 final readonly class LocaleTranslationKeyAdminController
 {
     public function __construct(
@@ -18,6 +21,9 @@ final readonly class LocaleTranslationKeyAdminController
     ) {
     }
 
+    /**
+     * Returns translation keys optionally filtered by domain and ordered deterministically.
+     */
     public function list(Request $request): JsonResponse
     {
         $criteria = [];
@@ -39,12 +45,21 @@ final readonly class LocaleTranslationKeyAdminController
         return new JsonResponse(['keys' => $keys, 'total' => count($keys)]);
     }
 
+    /**
+     * Validates and persists a unique translation key within its domain.
+     */
     public function register(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true) ?? [];
-        $domain = trim((string) ($data['domain'] ?? ''));
-        $key = trim((string) ($data['key'] ?? ''));
-        $component = trim((string) ($data['component'] ?? ''));
+        $data = json_decode($request->getContent(), true);
+        if (!is_array($data)) {
+            $data = [];
+        }
+        $domainValue = $data['domain'] ?? null;
+        $keyValue = $data['key'] ?? null;
+        $componentValue = $data['component'] ?? null;
+        $domain = is_scalar($domainValue) ? trim((string) $domainValue) : '';
+        $key = is_scalar($keyValue) ? trim((string) $keyValue) : '';
+        $component = is_scalar($componentValue) ? trim((string) $componentValue) : '';
 
         if ('' === $domain || '' === $key || '' === $component) {
             return new JsonResponse(['error' => 'domain, key and component are required'], 400);

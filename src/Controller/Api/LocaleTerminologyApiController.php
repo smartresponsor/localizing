@@ -8,6 +8,9 @@ use App\Localizing\Repository\LocaleTerminologyEntryEntityRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Provides read-only terminology lookup for runtime localization consumers.
+ */
 final readonly class LocaleTerminologyApiController
 {
     public function __construct(
@@ -15,6 +18,9 @@ final readonly class LocaleTerminologyApiController
     ) {
     }
 
+    /**
+     * Returns terminology entries filtered by optional locale and source-term criteria.
+     */
     public function __invoke(Request $request): JsonResponse
     {
         $criteria = [];

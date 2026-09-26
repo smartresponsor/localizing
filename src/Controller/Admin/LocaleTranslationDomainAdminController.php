@@ -10,6 +10,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Manages translation-domain registration and discovery through administrative endpoints.
+ */
 final readonly class LocaleTranslationDomainAdminController
 {
     public function __construct(
@@ -18,6 +21,9 @@ final readonly class LocaleTranslationDomainAdminController
     ) {
     }
 
+    /**
+     * Returns all registered translation domains ordered by their stable domain name.
+     */
     public function list(): JsonResponse
     {
         $domains = array_map(
@@ -32,11 +38,19 @@ final readonly class LocaleTranslationDomainAdminController
         return new JsonResponse(['domains' => $domains, 'total' => count($domains)]);
     }
 
+    /**
+     * Validates and persists a unique translation domain for its owning component.
+     */
     public function register(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true) ?? [];
-        $name = trim((string) ($data['name'] ?? ''));
-        $component = trim((string) ($data['component'] ?? ''));
+        $data = json_decode($request->getContent(), true);
+        if (!is_array($data)) {
+            $data = [];
+        }
+        $nameValue = $data['name'] ?? null;
+        $componentValue = $data['component'] ?? null;
+        $name = is_scalar($nameValue) ? trim((string) $nameValue) : '';
+        $component = is_scalar($componentValue) ? trim((string) $componentValue) : '';
 
         if ('' === $name || '' === $component) {
             return new JsonResponse(['error' => 'name and component are required'], 400);

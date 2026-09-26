@@ -10,6 +10,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Manages approved terminology entries used to keep translations lexically consistent.
+ */
 final readonly class LocaleTerminologyAdminController
 {
     public function __construct(
@@ -18,6 +21,9 @@ final readonly class LocaleTerminologyAdminController
     ) {
     }
 
+    /**
+     * Returns terminology entries optionally filtered by locale and ordered for review.
+     */
     public function list(Request $request): JsonResponse
     {
         $criteria = [];
@@ -40,13 +46,23 @@ final readonly class LocaleTerminologyAdminController
         return new JsonResponse(['entries' => $entries, 'total' => count($entries)]);
     }
 
+    /**
+     * Validates and persists a unique approved term for a locale and source term.
+     */
     public function register(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true) ?? [];
-        $sourceTerm = trim((string) ($data['source_term'] ?? ''));
-        $locale = trim((string) ($data['locale'] ?? ''));
-        $approvedTerm = trim((string) ($data['approved_term'] ?? ''));
-        $note = isset($data['note']) ? (string) $data['note'] : null;
+        $data = json_decode($request->getContent(), true);
+        if (!is_array($data)) {
+            $data = [];
+        }
+        $sourceValue = $data['source_term'] ?? null;
+        $localeValue = $data['locale'] ?? null;
+        $approvedValue = $data['approved_term'] ?? null;
+        $noteValue = $data['note'] ?? null;
+        $sourceTerm = is_scalar($sourceValue) ? trim((string) $sourceValue) : '';
+        $locale = is_scalar($localeValue) ? trim((string) $localeValue) : '';
+        $approvedTerm = is_scalar($approvedValue) ? trim((string) $approvedValue) : '';
+        $note = is_scalar($noteValue) ? (string) $noteValue : null;
 
         if ('' === $sourceTerm || '' === $locale || '' === $approvedTerm) {
             return new JsonResponse(['error' => 'source_term, locale and approved_term are required'], 400);
@@ -74,6 +90,9 @@ final readonly class LocaleTerminologyAdminController
         ], 201);
     }
 
+    /**
+     * Updates an existing approved term and note while preserving its stable identity.
+     */
     public function update(int $id, Request $request): JsonResponse
     {
         $entry = $this->terminologyRepository->find($id);
@@ -81,9 +100,17 @@ final readonly class LocaleTerminologyAdminController
             return new JsonResponse(['error' => 'Terminology entry not found'], 404);
         }
 
-        $data = json_decode($request->getContent(), true) ?? [];
-        $approvedTerm = trim((string) ($data['approved_term'] ?? $entry->getApprovedTerm()));
-        $note = array_key_exists('note', $data) ? (null !== $data['note'] ? (string) $data['note'] : null) : $entry->getNote();
+        $data = json_decode($request->getContent(), true);
+        if (!is_array($data)) {
+            $data = [];
+        }
+        $approvedValue = $data['approved_term'] ?? $entry->getApprovedTerm();
+        $approvedTerm = is_scalar($approvedValue) ? trim((string) $approvedValue) : '';
+        $note = $entry->getNote();
+        if (array_key_exists('note', $data)) {
+            $noteValue = $data['note'];
+            $note = null === $noteValue ? null : (is_scalar($noteValue) ? (string) $noteValue : $entry->getNote());
+        }
 
         if ('' === $approvedTerm) {
             return new JsonResponse(['error' => 'approved_term cannot be empty'], 400);

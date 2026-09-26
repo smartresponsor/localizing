@@ -4,7 +4,7 @@
 
 == Canon
 
-* Main namespace: `App\...`.
+* Main component namespace: `App\Localizing\...`.
 * Repository/workspace capability name: `Localizing`.
 * Core business entity: `Locale`.
 * `Localizing` does not replace Symfony Translator at runtime.

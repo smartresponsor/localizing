@@ -10,6 +10,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Manages persisted translation messages and idempotent message updates for maintainers.
+ */
 final readonly class LocaleTranslationMessageAdminController
 {
     public function __construct(
@@ -18,6 +21,9 @@ final readonly class LocaleTranslationMessageAdminController
     ) {
     }
 
+    /**
+     * Returns translation messages filtered by locale, domain, or translation key.
+     */
     public function list(Request $request): JsonResponse
     {
         $criteria = [];
@@ -42,13 +48,23 @@ final readonly class LocaleTranslationMessageAdminController
         return new JsonResponse(['messages' => $messages, 'total' => count($messages)]);
     }
 
+    /**
+     * Creates a translation message or updates the existing locale/domain/key record in place.
+     */
     public function upsert(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true) ?? [];
-        $locale = trim((string) ($data['locale'] ?? ''));
-        $domain = trim((string) ($data['domain'] ?? ''));
-        $key = trim((string) ($data['key'] ?? ''));
-        $message = (string) ($data['message'] ?? '');
+        $data = json_decode($request->getContent(), true);
+        if (!is_array($data)) {
+            $data = [];
+        }
+        $localeValue = $data['locale'] ?? null;
+        $domainValue = $data['domain'] ?? null;
+        $keyValue = $data['key'] ?? null;
+        $messageValue = $data['message'] ?? null;
+        $locale = is_scalar($localeValue) ? trim((string) $localeValue) : '';
+        $domain = is_scalar($domainValue) ? trim((string) $domainValue) : '';
+        $key = is_scalar($keyValue) ? trim((string) $keyValue) : '';
+        $message = is_scalar($messageValue) ? (string) $messageValue : '';
 
         if ('' === $locale || '' === $domain || '' === $key) {
             return new JsonResponse(['error' => 'locale, domain and key are required'], 400);

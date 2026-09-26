@@ -3,7 +3,7 @@
 
 declare(strict_types=1);
 
-use App\Kernel;
+use App\Localizing\Kernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Dotenv\Dotenv;
 

@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: LocaleTerminologyEntryEntityRepository::class)]
 #[ORM\Table(name: 'locale_terminology_entry')]
 #[ORM\UniqueConstraint(name: 'uniq_locale_terminology_term', columns: ['source_term', 'locale_code'])]
+/**
+ * Persists an approved localized term and optional guidance for one locale.
+ */
 class LocaleTerminologyEntryEntity
 {
     use ObjectAuditEmbeddableTrait;

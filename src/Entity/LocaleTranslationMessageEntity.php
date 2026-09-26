@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: LocaleTranslationMessageEntityRepository::class)]
 #[ORM\Table(name: 'locale_translation_message')]
 #[ORM\UniqueConstraint(name: 'uniq_locale_translation_message', columns: ['locale_code', 'domain_name', 'key_name'])]
+/**
+ * Persists one localized message for a locale, translation domain, and key.
+ */
 class LocaleTranslationMessageEntity
 {
     use ObjectAuditEmbeddableTrait;

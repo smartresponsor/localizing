@@ -3,6 +3,15 @@ supported_locales:
   - en
   - uk
   - ru
+  - es
+  - de
+  - fr
+  - pl
+  - pt
+  - it
+  - nl
+  - tr
+  - ar
 fallback_chains:
   uk-UA: [uk, en]
   ru-RU: [ru, en]

@@ -7,6 +7,9 @@ namespace App\Localizing\Controller\Api;
 use App\Localizing\Repository\LocaleTranslationDomainEntityRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/**
+ * Publishes the registered translation domains available to localization consumers.
+ */
 final readonly class LocaleTranslationDomainApiController
 {
     public function __construct(
@@ -14,6 +17,9 @@ final readonly class LocaleTranslationDomainApiController
     ) {
     }
 
+    /**
+     * Returns translation domains ordered by their stable domain name.
+     */
     public function __invoke(): JsonResponse
     {
         $domains = array_map(

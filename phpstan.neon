@@ -7,7 +7,7 @@ parameters:
 
   ignoreErrors:
     -
-      message: '#Property App\\Entity\\[A-Za-z0-9_]+::\$id \(int\|null\) is never assigned int so it can be removed from the property type\.#'
+      message: '#Property App\\Localizing\\Entity\\[A-Za-z0-9_]+::\$id \(int\|null\) is never assigned int so it can be removed from the property type\.#'
       identifier: property.unusedType
       paths:
         - src/Entity

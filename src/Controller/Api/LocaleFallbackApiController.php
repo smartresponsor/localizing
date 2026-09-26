@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Localizing\Controller\Api;
 
-use App\Localizing\ServiceInterface\Locale\LocaleFallbackResolverInterface;
+use App\Localizing\Resolver\LocaleFallbackResolverInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/**
+ * Exposes deterministic locale fallback chains through the public API boundary.
+ */
 final readonly class LocaleFallbackApiController
 {
     public function __construct(
@@ -14,11 +17,14 @@ final readonly class LocaleFallbackApiController
     ) {
     }
 
-    public function __invoke(string $code): JsonResponse
+    /**
+     * Returns the resolved fallback chain for the requested locale identifier.
+     */
+    public function __invoke(string $slug): JsonResponse
     {
         return new JsonResponse([
-            'locale' => $code,
-            'fallback_chain' => $this->fallbackResolver->resolveFallbackChain($code),
+            'locale' => $slug,
+            'fallback_chain' => $this->fallbackResolver->resolveFallbackChain($slug),
         ]);
     }
 }

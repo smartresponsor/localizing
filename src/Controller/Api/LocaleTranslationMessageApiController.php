@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Localizing\Controller\Api;
 
 use App\Localizing\Repository\LocaleTranslationMessageEntityRepository;
-use App\Localizing\ServiceInterface\Locale\LocaleFallbackResolverInterface;
+use App\Localizing\Resolver\LocaleFallbackResolverInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Resolves translation messages across the configured locale fallback chain.
+ */
 final readonly class LocaleTranslationMessageApiController
 {
     public function __construct(
@@ -17,6 +20,9 @@ final readonly class LocaleTranslationMessageApiController
     ) {
     }
 
+    /**
+     * Returns the first matching translation message or a not-found response after fallback exhaustion.
+     */
     public function resolve(Request $request): JsonResponse
     {
         $locale = trim((string) $request->query->get('locale', ''));

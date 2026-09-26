@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: LocaleTranslationKeyEntityRepository::class)]
 #[ORM\Table(name: 'locale_translation_key')]
 #[ORM\UniqueConstraint(name: 'uniq_locale_translation_key_domain_name', columns: ['domain_name', 'key_name'])]
+/**
+ * Persists a canonical translation key within a domain and owning component.
+ */
 class LocaleTranslationKeyEntity
 {
     use ObjectAuditEmbeddableTrait;

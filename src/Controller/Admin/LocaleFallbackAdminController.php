@@ -10,6 +10,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Manages persisted locale fallback chains through the administrative API.
+ */
 final readonly class LocaleFallbackAdminController
 {
     public function __construct(
@@ -18,7 +21,10 @@ final readonly class LocaleFallbackAdminController
     ) {
     }
 
-    public function list(string $code): JsonResponse
+    /**
+     * Returns fallback entries for a locale ordered by their configured position.
+     */
+    public function list(string $slug): JsonResponse
     {
         $fallbacks = array_map(
             static fn ($fb) => [
@@ -27,32 +33,40 @@ final readonly class LocaleFallbackAdminController
                 'fallback_locale' => $fb->getFallbackLocaleCode(),
                 'position' => $fb->getPosition(),
             ],
-            $this->fallbackRepository->findBy(['localeCode' => $code], ['position' => 'ASC']),
+            $this->fallbackRepository->findBy(['localeCode' => $slug], ['position' => 'ASC']),
         );
 
-        return new JsonResponse(['locale' => $code, 'fallbacks' => $fallbacks]);
+        return new JsonResponse(['locale' => $slug, 'fallbacks' => $fallbacks]);
     }
 
-    public function add(string $code, Request $request): JsonResponse
+    /**
+     * Validates and persists a unique fallback entry for the requested locale.
+     */
+    public function add(string $slug, Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true) ?? [];
-        $fallbackCode = trim((string) ($data['fallback_locale'] ?? ''));
-        $position = (int) ($data['position'] ?? 0);
+        $data = json_decode($request->getContent(), true);
+        if (!is_array($data)) {
+            $data = [];
+        }
+        $fallbackValue = $data['fallback_locale'] ?? null;
+        $positionValue = $data['position'] ?? 0;
+        $fallbackCode = is_scalar($fallbackValue) ? trim((string) $fallbackValue) : '';
+        $position = is_int($positionValue) ? $positionValue : (is_numeric($positionValue) ? (int) $positionValue : 0);
 
         if ('' === $fallbackCode) {
             return new JsonResponse(['error' => 'fallback_locale is required'], 400);
         }
 
         $existing = $this->fallbackRepository->findOneBy([
-            'localeCode' => $code,
+            'localeCode' => $slug,
             'fallbackLocaleCode' => $fallbackCode,
         ]);
 
         if (null !== $existing) {
-            return new JsonResponse(['error' => sprintf('Fallback "%s" already exists for locale "%s"', $fallbackCode, $code)], 409);
+            return new JsonResponse(['error' => sprintf('Fallback "%s" already exists for locale "%s"', $fallbackCode, $slug)], 409);
         }
 
-        $fallback = new LocaleFallbackEntity($code, $fallbackCode, $position);
+        $fallback = new LocaleFallbackEntity($slug, $fallbackCode, $position);
         $this->entityManager->persist($fallback);
         $this->entityManager->flush();
 
@@ -64,9 +78,12 @@ final readonly class LocaleFallbackAdminController
         ], 201);
     }
 
-    public function remove(string $code, int $id): JsonResponse
+    /**
+     * Removes an existing fallback entry or reports that the identifier was not found.
+     */
+    public function remove(int $id): JsonResponse
     {
-        $fallback = $this->fallbackRepository->findOneBy(['id' => $id, 'localeCode' => $code]);
+        $fallback = $this->fallbackRepository->find($id);
         if (null === $fallback) {
             return new JsonResponse(['error' => 'Fallback not found'], 404);
         }

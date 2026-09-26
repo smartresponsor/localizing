@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: LocaleFallbackEntityRepository::class)]
 #[ORM\Table(name: 'locale_fallback')]
 #[ORM\UniqueConstraint(name: 'uniq_locale_fallback_chain', columns: ['locale_code', 'fallback_locale_code'])]
+/**
+ * Persists one ordered fallback-locale edge for a source locale.
+ */
 class LocaleFallbackEntity
 {
     use ObjectAuditEmbeddableTrait;
