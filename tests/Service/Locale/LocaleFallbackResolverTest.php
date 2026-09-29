@@ -19,4 +19,11 @@ final class LocaleFallbackResolverTest extends TestCase
         self::assertSame(['en'], $resolver->resolveFallbackChain('en'));
         self::assertSame(['en-US', 'en'], $resolver->resolveFallbackChain('en-US'));
     }
+
+    public function testUsesSymfonyIcuParentLocaleChain(): void
+    {
+        $resolver = new LocaleFallbackResolver(new LocaleRegistryService(['en', 'es', 'es_419', 'es_AR'], 'en'));
+
+        self::assertSame(['es_AR', 'es_419', 'es', 'en'], $resolver->resolveFallbackChain('es_AR'));
+    }
 }

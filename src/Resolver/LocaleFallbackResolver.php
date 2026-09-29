@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Localizing\Resolver;
 
 use App\Localizing\ServiceInterface\LocaleRegistryServiceInterface;
+use Symfony\Component\Translation\LocaleFallbackProvider;
 
 /**
  * Builds deterministic locale fallback chains from regional and default locale rules.
@@ -20,14 +21,8 @@ final readonly class LocaleFallbackResolver implements LocaleFallbackResolverInt
      */
     public function resolveFallbackChain(string $localeCode): array
     {
-        $chain = [$localeCode];
-        $separatorPosition = strpos($localeCode, '-');
-        if (false !== $separatorPosition) {
-            $chain[] = strtolower(substr($localeCode, 0, $separatorPosition));
-        }
+        $fallbackProvider = new LocaleFallbackProvider([$this->localeRegistry->getDefaultLocaleCode()]);
 
-        $chain[] = $this->localeRegistry->getDefaultLocaleCode();
-
-        return array_values(array_unique($chain));
+        return array_values([$localeCode, ...$fallbackProvider->computeFallbackLocales($localeCode)]);
     }
 }

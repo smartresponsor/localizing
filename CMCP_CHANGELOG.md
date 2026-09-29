@@ -157,3 +157,27 @@
 - The aggregate `composer quality` worker was not admitted under temporary runtime-capacity WATCH, so the exact declared sub-gates were executed separately. A later synchronous aggregate attempt exceeded the MCP orchestration call timeout; no constituent gate failure was observed.
 - No browser/UI code changed in this pass. The repository's declared behavioral inventory reports UI 0/0, so screenshot generation is not applicable to this change.
 - Git packaging was completed after semantic classification of the pre-existing dirty set. `.gating/README.md`, `composer.json`, `composer.prod.json`, `LICENSE`, and `NOTICE` form one coherent package-policy change (licensing plus Canon052 Gating integration) and were committed together as signed commit `b3c002f` (`chore: align licensing and canonical gating integration`). Canon055 documentation and this journal remain isolated for a separate commit.
+
+## engine-20260925222120-localizing-7ff964 — 2026-09-29
+
+### Reconnaissance and baseline
+
+- Read the authoritative execution specification, Localizing AGENTS/README/AsciiDoc/Composer configuration, current Git state, existing CMCP journal, fallback implementation/tests, and Symfony translation configuration.
+- Re-read the mandatory dependency contour context for Objecting, Cruding, Viewing, and Interfacing and verified Localizing declares all four direct Composer dependencies with sibling path/symlink wiring. No dependency repository will be mutated.
+- Re-read Canonization guard matrix plus normative Canon052 and Canon055 material. Current mapping remains: default App\\Localizing\\ PSR-4 identity, Symfony-oriented typed roots, generic CRUD owned by Cruding, runtime translation owned by Symfony Translator, and Localizing owning deterministic locale/fallback/catalog governance.
+- Current branch `feature/localizing-rc-20260914` is clean and synchronized with `origin/feature/localizing-rc-20260914` at `a2dd4e41af9e5a80052a6423673d6598155fa120`. Composer strict validation and the current standard Gating entrypoint are green.
+- Market/runtime baseline: Symfony 8.1 exposes `LocaleFallbackProvider` for ICU parent-locale resolution, subtag shortening, configured fallback locales, and locale validation. Mature localization stacks treat fallback semantics as deterministic catalog infrastructure rather than request-time translation logic.
+- RC-critical workstream: remove Localizing's hand-written fallback approximation and delegate fallback computation to Symfony's canonical `LocaleFallbackProvider`, retaining Localizing's registry-owned default locale policy and explicit requested-locale-first chain contract.
+- Growth workstream: translation memory, review/history workflow, pseudolocalization, contextual screenshots, provider/AI translation, and richer terminology UX remain post-RC.
+- Material risk: fallback output can broaden for ICU parent locales (for example `es_AR` includes `es_419` before `es`); regression tests must pin requested locale, ICU parent ordering, default de-duplication, and existing hyphenated behavior.
+- Planned gates: PHP syntax for changed files, PHP-CS-Fixer, PHPStan, PHPUnit, catalog audit, Doctrine parity, behavioral evidence, Gating, Composer strict validation, and final Git/branch verification.
+
+### Implementation and verification
+
+- Replaced the manual hyphen-only fallback approximation in `LocaleFallbackResolver` with Symfony 8.1 `LocaleFallbackProvider`, while preserving Localizing's public contract that the explicitly requested locale is first in the returned chain and the registry-owned default is the configured terminal fallback.
+- Added regression coverage for ICU parent locale resolution: `es_AR` now deterministically resolves as `es_AR -> es_419 -> es -> en`, matching Symfony Translator semantics instead of skipping the ICU parent.
+- Preserved the declared `list<string>` interface contract explicitly with `array_values()`; the first PHPStan pass caught the spread-expression shape ambiguity and the implementation was repaired before acceptance.
+- Targeted PHP lint is green for the two changed PHP files. PHPUnit is green at 49 tests / 380 assertions.
+- Full `composer quality` is green: 75 PHP syntax checks, PHP-CS-Fixer 0 fixes, PHPStan 0 errors, PHPUnit 49/380, catalog audit 12 messages / 0 findings, Doctrine mapping and migration currentness green, behavioral evidence functional 2/2 / behavioral 2/2 / UI 0/0 / critical 1/1, and Gating 0 failed / 0 warning / 2 profile-dependent skips.
+- Persistent path/branch coverage generation via `composer test:coverage` is green under PHP 8.4.13 + Xdebug 3.5.1 with the same 49 tests / 380 assertions.
+- No browser/mobile UI, navigation, form, or interactive flow changed. The maintained behavioral inventory remains UI 0/0, so screenshot/visual evidence is not applicable for this patch.
